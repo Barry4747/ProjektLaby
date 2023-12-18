@@ -6,9 +6,9 @@ public class PracownikAdministracyjny extends PracownikUczelni implements Interf
     private int liczbaNadgodzin;
     public static List<String> stanowiskoPracy = new ArrayList<>();
 
-    public PracownikAdministracyjny(String imie, String nazwisko, String PESEL, byte wiek, String plec, String stanowisko, byte stazPracy, float pensja,
+    public PracownikAdministracyjny(String imie, String nazwisko, String email, String PESEL, byte wiek, String plec, String stanowisko, byte stazPracy, float pensja,
                                     int liczbaNadgodzin){
-        super(imie, nazwisko, PESEL, wiek, plec, stanowisko, stazPracy, pensja);
+        super(imie, nazwisko, email, PESEL, wiek, plec, stanowisko, stazPracy, pensja);
         this.liczbaNadgodzin=liczbaNadgodzin;
     }
     private static final long serialVersionUID = -8215413912087069104L;
@@ -41,6 +41,7 @@ public class PracownikAdministracyjny extends PracownikUczelni implements Interf
         System.out.println("PRACOWNIK ADMINISTRACYJNY"+"\n" +
                 "Imie: " + this.getImie() + "\n" +
                 "Nazwisko: " + this.getNazwisko() + "\n" +
+                "Email: " + this.getEmail() + "\n" +
                 "Wiek: " + this.getWiek() + "\n" +
                 "Ples: " + this.getPlec() + "\n" +
                 "Stanowisko: " + this.getStanowisko() + "\n" +

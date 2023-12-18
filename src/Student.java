@@ -11,9 +11,9 @@ public class Student extends Osoba implements InterfaceWyswietlanie, Serializabl
     private boolean IIstopnia;
     private boolean stStacjonarne;
     private boolean stNiestacjonarne;
-    public Student(String imie, String nazwisko, String PESEL, byte wiek, String plec, String nrIndeksu, int rokStudiow, List<Kursy> listaKursow, boolean erasmus,
+    public Student(String imie, String nazwisko, String email, String PESEL, byte wiek, String plec, String nrIndeksu, int rokStudiow, List<Kursy> listaKursow, boolean erasmus,
                    boolean Istopnia, boolean IIstopnia, boolean stStacjonarne, boolean stNiestacjonarne){
-        super(imie, nazwisko, PESEL, wiek, plec);
+        super(imie, nazwisko, email, PESEL, wiek, plec);
         this.nrIndeksu=nrIndeksu;
         this.rokStudiow=rokStudiow;
         this.listaKursow=listaKursow;

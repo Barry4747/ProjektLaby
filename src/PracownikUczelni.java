@@ -3,8 +3,8 @@ public abstract class PracownikUczelni extends Osoba implements InterfaceWyswiet
     private byte stazPracy;
     private float pensja;
 
-    public PracownikUczelni(String imie, String nazwisko, String PESEL, byte wiek, String plec, String stanowisko, byte stazPracy, float pensja){
-        super(imie, nazwisko, PESEL, wiek, plec);
+    public PracownikUczelni(String imie, String nazwisko, String email, String PESEL, byte wiek, String plec, String stanowisko, byte stazPracy, float pensja){
+        super(imie, nazwisko, email, PESEL, wiek, plec);
         this.stanowisko=stanowisko;
         this.stazPracy=stazPracy;
         this.pensja=pensja;

@@ -3,12 +3,14 @@ import java.io.Serializable;
 public abstract class Osoba implements InterfaceWyswietlanie, Serializable {
     private String imie;
     private String nazwisko;
+    private String email;
     private String PESEL;
     private byte wiek;
     private String plec;
-    public Osoba(String imie, String nazwisko, String PESEL, byte wiek, String plec){
+    public Osoba(String imie, String nazwisko, String email, String PESEL, byte wiek, String plec){
         this.imie=imie;
         this.nazwisko=nazwisko;
+        this.email=email;
         this.PESEL=PESEL;
         this.wiek=wiek;
         this.plec=plec;
@@ -28,6 +30,14 @@ public abstract class Osoba implements InterfaceWyswietlanie, Serializable {
 
     public void setNazwisko(String nazwisko) {
         this.nazwisko = nazwisko;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPESEL() {
@@ -58,6 +68,7 @@ public abstract class Osoba implements InterfaceWyswietlanie, Serializable {
     public String toString() {
         return "Imie: " + imie + "\n" +
                 "Nazwisko: " + nazwisko + "\n" +
+                "Email: " + email + "\n" +
                 "PESEL: " + PESEL + "\n" +
                 "Wiek: " + wiek +"\n" +
                 "Plec: " + plec + "\n";

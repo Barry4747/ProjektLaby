@@ -14,6 +14,17 @@ public class DodawanieOsobIKursow {
         System.out.println("Podaj nazwisko");
         nazwisko=scan.nextLine();
 
+        String adresEmail;
+        while (true) {
+            System.out.println("Podaj adres Email : ");
+            adresEmail = scan.nextLine();
+            if (!adresEmail.contains("@") || adresEmail.indexOf("@") == 0 || adresEmail.indexOf("@") == adresEmail.length() - 1) {
+                System.out.println("Email nieprawidlowy");
+            } else {
+                break;
+            }
+        }
+
         do {
             System.out.println("Podaj pesel");
             pesel=scan.nextLine();
@@ -80,7 +91,7 @@ public class DodawanieOsobIKursow {
             stNiestacjonarne=scan.nextLine();
         }while (!isBoolean(stNiestacjonarne));
 
-        Main.osoba.add(new Student(imie, nazwisko, pesel, Byte.parseByte(wiek), plec, nrIndeksu, Integer.parseInt(rokStudiow), tempList, Boolean.parseBoolean(erasmus), Boolean.parseBoolean(pierwszegoSt), Boolean.parseBoolean(drugiegoSt), Boolean.parseBoolean(stStacjonarne), Boolean.parseBoolean(stNiestacjonarne)));
+        Main.osoba.add(new Student(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, nrIndeksu, Integer.parseInt(rokStudiow), tempList, Boolean.parseBoolean(erasmus), Boolean.parseBoolean(pierwszegoSt), Boolean.parseBoolean(drugiegoSt), Boolean.parseBoolean(stStacjonarne), Boolean.parseBoolean(stNiestacjonarne)));
     }
     public static void dodajKurs(Scanner scan){
         String nazwa, prowadzacy, pktects;
@@ -118,6 +129,17 @@ public class DodawanieOsobIKursow {
 
         System.out.println("Podaj nazwisko");
         nazwisko=scan.nextLine();
+
+        String adresEmail;
+        while (true) {
+            System.out.println("Podaj adres Email : ");
+            adresEmail = scan.nextLine();
+            if (!adresEmail.contains("@") || adresEmail.indexOf("@") == 0 || adresEmail.indexOf("@") == adresEmail.length() - 1) {
+                System.out.println("Email nieprawidlowy");
+            } else {
+                break;
+            }
+        }
 
         do {
             System.out.println("Podaj pesel");
@@ -163,7 +185,7 @@ public class DodawanieOsobIKursow {
             liczbaPublikacji=scan.nextLine();
         }while (!isNumeric(liczbaPublikacji));
 
-        Main.osoba.add(new PracownikBadawczoDydaktyczny(imie, nazwisko, pesel, Byte.parseByte(wiek), plec, stanowisko, Byte.parseByte(staz), Float.parseFloat(pensja), Integer.parseInt(liczbaPublikacji)));
+        Main.osoba.add(new PracownikBadawczoDydaktyczny(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, stanowisko, Byte.parseByte(staz), Float.parseFloat(pensja), Integer.parseInt(liczbaPublikacji)));
 
     }
     public static void dodajPracownikAdministracyjny(Scanner scan){
@@ -174,6 +196,17 @@ public class DodawanieOsobIKursow {
 
         System.out.println("Podaj nazwisko");
         nazwisko=scan.nextLine();
+
+        String adresEmail;
+        while (true) {
+            System.out.println("Podaj adres Email : ");
+            adresEmail = scan.nextLine();
+            if (!adresEmail.contains("@") || adresEmail.indexOf("@") == 0 || adresEmail.indexOf("@") == adresEmail.length() - 1) {
+                System.out.println("Email nieprawidlowy");
+            } else {
+                break;
+            }
+        }
 
         do {
             System.out.println("Podaj pesel");
@@ -219,7 +252,7 @@ public class DodawanieOsobIKursow {
             liczbaNadgodzin=scan.nextLine();
         }while (!isNumeric(liczbaNadgodzin));
 
-        Main.osoba.add(new PracownikBadawczoDydaktyczny(imie, nazwisko, pesel, Byte.parseByte(wiek), plec, stanowisko, Byte.parseByte(staz),  Float.parseFloat(pensja), Integer.parseInt(liczbaNadgodzin)));
+        Main.osoba.add(new PracownikBadawczoDydaktyczny(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, stanowisko, Byte.parseByte(staz),  Float.parseFloat(pensja), Integer.parseInt(liczbaNadgodzin)));
     }
 
     public static boolean isNumeric(String str) {

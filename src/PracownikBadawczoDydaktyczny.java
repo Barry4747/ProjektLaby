@@ -6,9 +6,9 @@ public class PracownikBadawczoDydaktyczny extends PracownikUczelni implements In
     private int liczbaPublikacji;
     public static List<String> stanowiskoPracy = new ArrayList<>();
 
-    public PracownikBadawczoDydaktyczny(String imie, String nazwisko, String PESEL, byte wiek, String plec, String stanowisko, byte stazPracy, float pensja,
+    public PracownikBadawczoDydaktyczny(String imie, String nazwisko, String email, String PESEL, byte wiek, String plec, String stanowisko, byte stazPracy, float pensja,
                                         int liczbaPublikacji){
-        super(imie, nazwisko, PESEL, wiek, plec, stanowisko, stazPracy, pensja);
+        super(imie, nazwisko, email, PESEL, wiek, plec, stanowisko, stazPracy, pensja);
         this.liczbaPublikacji=liczbaPublikacji;
     }
     private static final long serialVersionUID = -502456261960054840L;
@@ -42,6 +42,7 @@ public class PracownikBadawczoDydaktyczny extends PracownikUczelni implements In
         System.out.println("PRACOWNIK BADAWCZO DYDAKTYCZNY"+"\n" +
                 "Imie: " + this.getImie() + "\n" +
                 "Nazwisko: " + this.getNazwisko() + "\n" +
+                "Email: " + this.getEmail() + "\n" +
                 "Wiek: " + this.getWiek() + "\n" +
                 "Plec: " + this.getPlec() + "\n" +
                 "Stanowisko: " + this.getStanowisko() + "\n" +
