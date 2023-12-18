@@ -56,10 +56,10 @@ public abstract class Osoba implements InterfaceWyswietlanie, Serializable {
 
     @Override
     public String toString() {
-        return "imie='" + imie + '\'' +
-                ", nazwisko='" + nazwisko + '\'' +
-                ", PESEL='" + PESEL + '\'' +
-                ", wiek=" + wiek +
-                ", plec='" + plec + '\'';
+        return "Imie: " + imie + "\n" +
+                "Nazwisko: " + nazwisko + "\n" +
+                "PESEL: " + PESEL + "\n" +
+                "Wiek: " + wiek +"\n" +
+                "Plec: " + plec + "\n";
     }
 }

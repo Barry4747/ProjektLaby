@@ -32,19 +32,22 @@ public class PracownikBadawczoDydaktyczny extends PracownikUczelni implements In
     @Override
     public String toString() {
         return super.toString() +
-                ", liczbaPublikacji=" + liczbaPublikacji;
+                "Liczba publikacji: " + liczbaPublikacji;
 
     }
 
     @Override
     public void wyswietlInfo() {
-        System.out.println("imie='" + this.getImie() + '\'' +
-                ", nazwisko='" + this.getNazwisko() + '\'' +
-                ", wiek=" + this.getWiek() +
-                ", plec='" + this.getPlec() + '\''+
-                ", stanowisko='" + this.getStanowisko() + '\'' +
-                ", stazPracy=" + this.getStazPracy() +
-                ", pensja=" + this.getPensja() +
-                ", liczbaPublikacji="+liczbaPublikacji);
+        System.out.println("-------------------------------------");
+        System.out.println("PRACOWNIK BADAWCZO DYDAKTYCZNY"+"\n" +
+                "Imie: " + this.getImie() + "\n" +
+                "Nazwisko: " + this.getNazwisko() + "\n" +
+                "Wiek: " + this.getWiek() + "\n" +
+                "Plec: " + this.getPlec() + "\n" +
+                "Stanowisko: " + this.getStanowisko() + "\n" +
+                "Staz pracy: " + this.getStazPracy() + "\n" +
+                "Pensja: " + this.getPensja() + "\n" +
+                "Liczba publikacji: "+liczbaPublikacji);
+        System.out.println("-------------------------------------");
     }
 }

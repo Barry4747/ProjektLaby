@@ -100,19 +100,23 @@ public class Student extends Osoba implements InterfaceWyswietlanie, Serializabl
 
     @Override
     public String toString() {
-        return super.toString() +
-                ", nrIndeksu='" + nrIndeksu + '\'' +
-                ", rokStudiow=" + rokStudiow +
-                ", listaKursow=" + listaKursow +
-                ", erasmus=" + erasmus +
-                ", Istopnia=" + Istopnia +
-                ", IIstopnia=" + IIstopnia +
-                ", stStacjonarne=" + stStacjonarne +
-                ", stNiestacjonarne=" + stNiestacjonarne;
+        return super.toString()+
+                "Student\n" +
+                "Numer indeksu: " + nrIndeksu + "\n" +
+                "Rok studiow: " + rokStudiow +"\n" +
+                "ListaKursow: " + "\n"+listaKursow +"\n" +
+                "Erasmus: " + erasmus +"\n" +
+                "I stopnia: " + Istopnia +"\n" +
+                "II stopnia: " + IIstopnia +"\n" +
+                "Studia stacjonarne: " + stStacjonarne +"\n" +
+                "Studia niestacjonarne: " + stNiestacjonarne +"\n";
     }
 
     @Override
     public void wyswietlInfo() {
+        System.out.println("-------------------------------------");
+        System.out.println("STUDENT");
         System.out.println(this.toString());
+        System.out.println("-------------------------------------");
     }
 }

@@ -32,18 +32,21 @@ public class PracownikAdministracyjny extends PracownikUczelni implements Interf
     @Override
     public String toString() {
         return super.toString() +
-                ", liczbaNadgodzin=" + liczbaNadgodzin;
+                "Liczba nadgodzin: " + liczbaNadgodzin;
     }
 
     @Override
     public void wyswietlInfo() {
-        System.out.println("imie='" + this.getImie() + '\'' +
-                ", nazwisko='" + this.getNazwisko() + '\'' +
-                ", wiek=" + this.getWiek() +
-                ", plec='" + this.getPlec() + '\''+
-                ", stanowisko='" + this.getStanowisko() + '\'' +
-                ", pensja=" + this.getPensja() + '\'' +
-                ", liczba nadgodzin=" + this.getLiczbaNadgodzin() +'\'' +
-                ", stazPracy=" + this.getStazPracy());
+        System.out.println("-------------------------------------");
+        System.out.println("PRACOWNIK ADMINISTRACYJNY"+"\n" +
+                "Imie: " + this.getImie() + "\n" +
+                "Nazwisko: " + this.getNazwisko() + "\n" +
+                "Wiek: " + this.getWiek() + "\n" +
+                "Ples: " + this.getPlec() + "\n" +
+                "Stanowisko: " + this.getStanowisko() + "\n" +
+                "Pensja: " + this.getPensja() + "\n" +
+                "Liczba nadgodzin: " + this.getLiczbaNadgodzin() + "\n" +
+                "Staz pracy: " + this.getStazPracy());
+        System.out.println("-------------------------------------");
     }
 }

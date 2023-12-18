@@ -37,8 +37,8 @@ public abstract class PracownikUczelni extends Osoba implements InterfaceWyswiet
     @Override
     public String toString() {
         return super.toString()+
-                ", stanowisko='" + stanowisko + '\'' +
-                ", stazPracy=" + stazPracy +
-                ", pensja=" + pensja;
+                "Stanowisko: " + stanowisko + "\n" +
+                "Staz pracy: " + stazPracy + "\n" +
+                "Pensja: " + pensja+ "\n" ;
     }
 }

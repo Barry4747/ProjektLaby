@@ -38,18 +38,19 @@ public class Kursy implements InterfaceWyswietlanie, Serializable {
 
     @Override
     public void wyswietlInfo() {
-        System.out.print("Nazwa kursu: " +this.nazwaKursu+
-                " punkty ECTS: "+this.pktECTS);
-        System.out.print(" prowadzacy: ");
+        System.out.println("-------------------------------------");
+        System.out.println("Nazwa kursu: " +this.nazwaKursu+"\n" +
+                "Punkty ECTS: "+this.pktECTS);
+        System.out.println("Prowadzacy: ");
         prowadzacy.wyswietlInfo();
+        System.out.println("-------------------------------------");
     }
 
     @Override
     public String toString() {
-        return "Kursy{" +
-                "nazwaKursu='" + nazwaKursu + '\'' +
-                ", prowadzacy=" + prowadzacy +
-                ", pktECTS=" + pktECTS +
-                '}';
+        return "KURS" + "\n" +
+                "Nazwa kursu: " + nazwaKursu + "\n" +
+                "Prowadzacy: " + prowadzacy +"\n" +
+                "Punkty ECTS: " + pktECTS+"\n";
     }
 }

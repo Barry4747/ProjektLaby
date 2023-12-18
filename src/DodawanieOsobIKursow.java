@@ -41,13 +41,15 @@ public class DodawanieOsobIKursow {
         while(true){
             System.out.println("Podaj nazwe kursu do dodania");
             System.out.println("Wpisz 'koniec' aby zakonczyc dodawanie kursow");
-            nazwaKursu= scan.next();
+            nazwaKursu= scan.nextLine();
             if (nazwaKursu.equals("koniec")){
                 break LoopTemp;
             }else {
                 for(int i=0; i<Main.listaKursow.size(); i++){
                     if(Main.listaKursow.get(i).getNazwaKursu().equals(nazwaKursu)){
                         tempList.add(Main.listaKursow.get(i));
+                        System.out.println("Dodano kurs!");
+                        break;
                     }
                 }
             }
