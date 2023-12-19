@@ -17,6 +17,11 @@ public class Menu {
                     opcjaDodaj(wybor, scan);
                     break;
                 case "3":
+                    Serializacja.zapiszListeKursow(Main.listaKursow);
+                    Serializacja.zapiszListeOsob(Main.osoba);
+                    System.out.println("Zapisano zmiany");
+                    break;
+                case "4":
                     break Loop;
                 default:
                     System.out.println("Nieprawidlowa opcja!");
@@ -238,7 +243,8 @@ public class Menu {
         System.out.println("MENU");
         System.out.println("1. Wyswietl");
         System.out.println("2. Dodaj");
-        System.out.println("3. Wyjscie");
+        System.out.println("3. Zapisz zmiany");
+        System.out.println("4. Wyjscie");
     }
     public static void menuWyswietl(){
         System.out.println("WYSWIETL");

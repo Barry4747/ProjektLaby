@@ -7,7 +7,7 @@ public class Main {
     public static List<Osoba> osoba = new ArrayList<>();
     public static List<Kursy> listaKursow = new ArrayList<>();
     public static void main(String[] args) {
-        osoba = Serializacja.wczytajListeKlientow();
+        osoba = Serializacja.wczytajListeOsob();
         listaKursow = Serializacja.wczytajListeKursow();
 
         PracownikBadawczoDydaktyczny.stanowiskoPracy.addAll(Arrays.asList("Asystent", "Adiunkt", "Profesor Nadzwyczajny", "Profesor Zwyczajny", "Wykładowca"));
@@ -16,7 +16,7 @@ public class Main {
 
         Menu.startMenu();
 
-        Serializacja.zapiszListeKlientow(osoba);
+        Serializacja.zapiszListeOsob(osoba);
         Serializacja.zapiszListeKursow(listaKursow);
     }
 

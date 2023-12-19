@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Serializacja {
 
-    public static List<Osoba> wczytajListeKlientow() {
+    public static List<Osoba> wczytajListeOsob() {
         try (ObjectInputStream odczyt = new ObjectInputStream(new FileInputStream("ListaOsob.ser"))) {
             return (ArrayList<Osoba>)odczyt.readObject();
 
@@ -15,7 +15,7 @@ public class Serializacja {
         return new ArrayList<>();
     }
 
-    public static void zapiszListeKlientow (List<Osoba> listaOsob) {
+    public static void zapiszListeOsob (List<Osoba> listaOsob) {
         try (ObjectOutputStream zapis = new ObjectOutputStream(new FileOutputStream("ListaOsob.ser"))) {
             zapis.writeObject(listaOsob);
         } catch (IOException e) {
