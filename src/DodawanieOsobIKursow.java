@@ -91,6 +91,10 @@ public class DodawanieOsobIKursow {
             stNiestacjonarne=scan.nextLine();
         }while (!isBoolean(stNiestacjonarne));
 
+        for(Kursy i : tempList){
+            i.getKursant().powiadomObserwadorow("Do kursu "+ i.getNazwaKursu()+ " dolaczyl "+ imie+" "+nazwisko);
+        }
+
         Main.osoba.add(new Student(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, nrIndeksu, Integer.parseInt(rokStudiow), tempList, Boolean.parseBoolean(erasmus), Boolean.parseBoolean(pierwszegoSt), Boolean.parseBoolean(drugiegoSt), Boolean.parseBoolean(stStacjonarne), Boolean.parseBoolean(stNiestacjonarne), new ArrayList<>()));
     }
     public static void dodajKurs(Scanner scan){
@@ -119,7 +123,8 @@ public class DodawanieOsobIKursow {
         }while (!isNumericF(pktects));
 
 
-        Main.listaKursow.add(new Kursy(nazwa, (PracownikBadawczoDydaktyczny) Main.osoba.get(indeksProwadzacego), Float.parseFloat(pktects)));
+        Main.listaKursow.add(new Kursy(nazwa, (PracownikBadawczoDydaktyczny) Main.osoba.get(indeksProwadzacego), Float.parseFloat(pktects), new NowyKursant()));
+        Main.listaKursow.get(Main.listaKursow.size()-1).getKursant().dodajObserwatora(new Obserwator(Main.osoba.get(indeksProwadzacego).getEmail()));
     }
     public static void dodajPracownikBadawczoDydaktyczny(Scanner scan){
         String imie, nazwisko, pesel, wiek, plec, stanowisko, staz, pensja, liczbaPublikacji;

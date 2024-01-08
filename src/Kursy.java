@@ -4,11 +4,13 @@ public class Kursy implements InterfaceWyswietlanie, Serializable {
     private String nazwaKursu;
     private PracownikBadawczoDydaktyczny prowadzacy;
     private float pktECTS;
+    private NowyKursant kursant;
 
-    public Kursy(String nazwaKursu, PracownikBadawczoDydaktyczny prowadzacy, float pktECTS) {
+    public Kursy(String nazwaKursu, PracownikBadawczoDydaktyczny prowadzacy, float pktECTS, NowyKursant kursant) {
         this.nazwaKursu = nazwaKursu;
         this.prowadzacy=prowadzacy;
         this.pktECTS=pktECTS;
+        this.kursant=kursant;
     }
     private static final long serialVersionUID = 2624508219198108986L;
 
@@ -34,6 +36,14 @@ public class Kursy implements InterfaceWyswietlanie, Serializable {
 
     public void setPktECTS(float pktECTS) {
         this.pktECTS = pktECTS;
+    }
+
+    public NowyKursant getKursant() {
+        return kursant;
+    }
+
+    public void setKursant(NowyKursant kursant) {
+        this.kursant = kursant;
     }
 
     @Override

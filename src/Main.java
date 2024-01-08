@@ -8,6 +8,9 @@ public class Main {
     public static void main(String[] args) {
         osoba = Serializacja.wczytajListeOsob();
         listaKursow = Serializacja.wczytajListeKursow();
+        for(Kursy i: listaKursow){
+            i.getKursant().setListaObserwatorow(Serializacja.wczytajListeObs(i));
+        }
 
         PracownikBadawczoDydaktyczny.stanowiskoPracy.addAll(Arrays.asList("Asystent", "Adiunkt", "Profesor Nadzwyczajny", "Profesor Zwyczajny", "Wykładowca"));
         PracownikAdministracyjny.stanowiskoPracy.addAll(Arrays.asList("Referent", "Specjalista", "Starszy Specjalista"));
@@ -17,6 +20,9 @@ public class Main {
 
         Serializacja.zapiszListeOsob(osoba);
         Serializacja.zapiszListeKursow(listaKursow);
+        for(Kursy i: listaKursow){
+            Serializacja.zapiszListeObs(i.getKursant().getListaObserwatorow(), i);
+        }
     }
 
 

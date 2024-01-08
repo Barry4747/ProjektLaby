@@ -90,7 +90,7 @@ public class Student extends Osoba implements InterfaceWyswietlanie, Serializabl
         this.stNiestacjonarne = stNiestacjonarne;
     }
     public void dodajKurs(String nazwaKursu, PracownikBadawczoDydaktyczny prowadzacy, float pktECTS){
-        listaKursow.add(new Kursy(nazwaKursu, prowadzacy, pktECTS));
+        listaKursow.add(new Kursy(nazwaKursu, prowadzacy, pktECTS, new NowyKursant()));
     }
     public void usunKurs(String kurs){
         for(int i=0; i<listaKursow.size(); i++)
