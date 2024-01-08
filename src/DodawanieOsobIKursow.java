@@ -185,7 +185,7 @@ public class DodawanieOsobIKursow {
             liczbaPublikacji=scan.nextLine();
         }while (!isNumeric(liczbaPublikacji));
 
-        Main.osoba.add(new PracownikBadawczoDydaktyczny(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, stanowisko, Byte.parseByte(staz), Float.parseFloat(pensja), Integer.parseInt(liczbaPublikacji)));
+        Main.osoba.add(new PracownikBadawczoDydaktyczny(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, stanowisko, Byte.parseByte(staz), Float.parseFloat(pensja), 0, Integer.parseInt(liczbaPublikacji)));
 
     }
     public static void dodajPracownikAdministracyjny(Scanner scan){
@@ -252,7 +252,7 @@ public class DodawanieOsobIKursow {
             liczbaNadgodzin=scan.nextLine();
         }while (!isNumeric(liczbaNadgodzin));
 
-        Main.osoba.add(new PracownikBadawczoDydaktyczny(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, stanowisko, Byte.parseByte(staz),  Float.parseFloat(pensja), Integer.parseInt(liczbaNadgodzin)));
+        Main.osoba.add(new PracownikBadawczoDydaktyczny(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, stanowisko, Byte.parseByte(staz),  Float.parseFloat(pensja), 0, Integer.parseInt(liczbaNadgodzin)));
     }
 
     public static boolean isNumeric(String str) {

@@ -33,6 +33,9 @@ public class Menu {
                     dodajOcene();
                     break;
                 case "7":
+                    premia();
+                    break;
+                case "8":
                     break Loop;
                 default:
                     System.out.println("Nieprawidlowa opcja!");
@@ -386,8 +389,9 @@ public class Menu {
         System.out.println("3. Sortuj");
         System.out.println("4. Usun");
         System.out.println("5. Zapisz zmiany");
-        System.out.println("6. Dodaj ocene");
-        System.out.println("7. Wyjscie");
+        System.out.println("6. Dodaj ocene (obserwator)");
+        System.out.println("7. Licz premie (strategia)");
+        System.out.println("8. Wyjscie");
     }
     public static void menuWyswietl(){
         System.out.println("WYSWIETL");
@@ -739,5 +743,68 @@ public class Menu {
             }
             System.out.println("Nieprawidlowy numer!");
         }
+    }
+    public static void premia(){
+        StrategiaPremia strategia;
+        List<PracownikUczelni> tempList = new ArrayList<>();
+        int counter=0;
+        for(Osoba i : Main.osoba){
+            if(i instanceof PracownikUczelni){
+                counter++;
+                System.out.println(counter+". "+i.getNazwisko()+" "+ i.getImie());
+                tempList.add((PracownikUczelni) i);
+            }
+        }
+
+        Scanner scan = new Scanner(System.in);
+        String wybor;
+
+        while (true){
+            System.out.println("Wybierz pracownika ktorego premie chcesz policzyc: ");
+            wybor=scan.nextLine();
+            PracownikUczelni pracownik = tempList.get(Integer.parseInt(wybor)-1);
+            if(wybor.matches("[0-9]+")){
+                if(Integer.parseInt(wybor)<=counter){
+                    strategia = new PremiaZaStaz();
+                    if(pracownik instanceof PracownikAdministracyjny){
+                        System.out.println("1. liczba nadgodzin");
+                        System.out.println("2. staz pracy");
+                        System.out.println("Wybierz wzgledem czego chcesz liczyc premie: ");
+                        String temp=scan.nextLine();
+                        switch (temp){
+                            case "1":
+                                strategia=new PremiaZaNadgodziny();
+                                break;
+                            case "2":
+                                strategia = new PremiaZaStaz();
+                                break;
+                            default:
+                                System.out.println("Nieprawidlowy numer");
+                                break;
+                        }
+                    }else if (pracownik instanceof PracownikBadawczoDydaktyczny){
+                        System.out.println("1. liczba publikacji");
+                        System.out.println("2. staz pracy");
+                        System.out.println("Wybierz wzgledem czego chcesz liczyc premie: ");
+                        String temp=scan.nextLine();
+                        switch (temp){
+                            case "1":
+                                strategia=new PremiaZaPublikacje();
+                                break;
+                            case "2":
+                                strategia = new PremiaZaStaz();
+                                break;
+                            default:
+                                System.out.println("Nieprawidlowy numer");
+                                break;
+                        }
+                    }
+                    System.out.println("Premia wynosi "+strategia.liczPremie(tempList.get(Integer.parseInt(wybor)-1)));
+                    return;
+                }
+            }
+            System.out.println("Nieprawidlowy numer!");
+        }
+
     }
 }

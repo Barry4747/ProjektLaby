@@ -2,8 +2,9 @@ public abstract class PracownikUczelni extends Osoba implements InterfaceWyswiet
     private String stanowisko;
     private byte stazPracy;
     private float pensja;
+    private float premia;
 
-    public PracownikUczelni(String imie, String nazwisko, String email, String PESEL, byte wiek, String plec, String stanowisko, byte stazPracy, float pensja){
+    public PracownikUczelni(String imie, String nazwisko, String email, String PESEL, byte wiek, String plec, String stanowisko, byte stazPracy, float pensja, float premia){
         super(imie, nazwisko, email, PESEL, wiek, plec);
         this.stanowisko=stanowisko;
         this.stazPracy=stazPracy;
@@ -32,6 +33,14 @@ public abstract class PracownikUczelni extends Osoba implements InterfaceWyswiet
 
     public void setPensja(float pensja) {
         this.pensja = pensja;
+    }
+
+    public float getPremia() {
+        return premia;
+    }
+
+    public void setPremia(float premia) {
+        this.premia = premia;
     }
 
     @Override
