@@ -17,11 +17,17 @@ public class Menu {
                     opcjaDodaj(wybor, scan);
                     break;
                 case "3":
+                    sortowanie(wybor, scan);
+                    break;
+                case "4":
+                    usuwanie(wybor, scan);
+                    break;
+                case "5":
                     Serializacja.zapiszListeKursow(Main.listaKursow);
                     Serializacja.zapiszListeOsob(Main.osoba);
                     System.out.println("Zapisano zmiany");
                     break;
-                case "4":
+                case "6":
                     break Loop;
                 default:
                     System.out.println("Nieprawidlowa opcja!");
@@ -223,6 +229,135 @@ public class Menu {
 
         }
     }
+
+    public static void sortowanie(String wybor, Scanner scan){
+        LoopSort:
+        while (true){
+            menuSortuj();
+            wybor=scan.nextLine();
+            switch (wybor){
+                case "1":
+                    Sortowanie.poNazwisku(Main.osoba);
+                    break;
+                case "2":
+                    Sortowanie.poImieniuINazwisku(Main.osoba);
+                    break;
+                case "3":
+                    Sortowanie.poNazwiskuIWieku(Main.osoba);
+                    break;
+                case "4":
+                    Sortowanie.kursPoNazwisko(Main.listaKursow);
+                    break;
+                case "5":
+                    Sortowanie.kursPoECTS(Main.listaKursow);
+                    break;
+                case "6":
+                    break LoopSort;
+                default:
+                    System.out.println("Nieprawidlowa opcja");
+                    break;
+            }
+
+        }
+    }
+    public static void usuwanie(String wybor, Scanner scan){
+        LoopUsuwanie:
+        while (true){
+            menuUsun();
+            wybor=scan.nextLine();
+            switch (wybor){
+                case "1":
+                    usunPracownik(wybor, scan);
+                    break;
+                case "2":
+                    usuwanieStudent(wybor, scan);
+                    break;
+                case "3":
+                    usuwanieKurs(wybor, scan);
+                    break;
+                case "4":
+                    break LoopUsuwanie;
+                default:
+                    System.out.println("Nieprawidlowa opcja");
+                    break;
+            }
+        }
+    }
+    public static void usunPracownik(String wybor, Scanner scan){
+        LoopUsuwanie:
+        while (true){
+            menuUsunPracownik();
+            wybor=scan.nextLine();
+            switch (wybor){
+                case "1":
+                    Usuwanie.usunPracownikPoNazwisku(Main.osoba);
+                    break;
+                case "2":
+                    Usuwanie.usunPracownikPoImieniu(Main.osoba);
+                    break;
+                case "3":
+                    Usuwanie.usunPracownikPoStazuPracy(Main.osoba);
+                    break;
+                case "4":
+                    Usuwanie.usunPracownikPoStanowisku(Main.osoba);
+                    break;
+                case "5":
+                    break LoopUsuwanie;
+                default:
+                    System.out.println("Nieprawidlowa opcja");
+                    break;
+            }
+        }
+    }
+    public static void usuwanieStudent(String wybor, Scanner scan){
+        LoopUsuwanie:
+        while (true){
+            menuUsunStudent();
+            wybor=scan.nextLine();
+            switch (wybor){
+                case "1":
+                    Usuwanie.usunStudentaPoNazwisku(Main.osoba);
+                    break;
+                case "2":
+                    Usuwanie.usunStudentaPoImieniu(Main.osoba);
+                    break;
+                case "3":
+                    Usuwanie.usunStudentaPoNrIndeksu(Main.osoba);
+                    break;
+                case "4":
+                    Usuwanie.usunStudentaPoRokuStudiow(Main.osoba);
+                    break;
+                case "5":
+                    break LoopUsuwanie;
+                default:
+                    System.out.println("Nieprawidlowa opcja");
+                    break;
+            }
+        }
+    }
+    public static void usuwanieKurs(String wybor, Scanner scan){
+        LoopUsuwanie:
+        while (true){
+            menuUsunKurs();
+            wybor=scan.nextLine();
+            switch (wybor){
+                case "1":
+                    Usuwanie.usunKursPoNazwie(Main.listaKursow);
+                    break;
+                case "2":
+                    Usuwanie.usunKursPoNazwiskuProwadzacego(Main.listaKursow);
+                    break;
+                case "3":
+                    Usuwanie.usunKursPoLiczbiePktECTS(Main.listaKursow);
+                    break;
+                case "4":
+                    break LoopUsuwanie;
+                default:
+                    System.out.println("Nieprawidlowa opcja");
+                    break;
+            }
+        }
+    }
     public static boolean isNumeric(String str) {
         try {
             Double.parseDouble(str);
@@ -243,8 +378,10 @@ public class Menu {
         System.out.println("MENU");
         System.out.println("1. Wyswietl");
         System.out.println("2. Dodaj");
-        System.out.println("3. Zapisz zmiany");
-        System.out.println("4. Wyjscie");
+        System.out.println("3. Sortuj");
+        System.out.println("4. Usun");
+        System.out.println("5. Zapisz zmiany");
+        System.out.println("6. Wyjscie");
     }
     public static void menuWyswietl(){
         System.out.println("WYSWIETL");
@@ -273,7 +410,7 @@ public class Menu {
         System.out.println("4. po ilosci punktow ECTS");
         System.out.println("5. powrot");
     }
-    public static void menuWyswietlPracownikow(){//nazwiska, albo imienia, albo stanowiska, stażu pracy lub liczby nadgodzin lub pensji
+    public static void menuWyswietlPracownikow(){
         System.out.println("PRACOWNICY");
         System.out.println("1. wszyscy");
         System.out.println("2. po nazwisku");
@@ -291,6 +428,47 @@ public class Menu {
         System.out.println("3. Pracownik Badawczo-Dydaktyczny");
         System.out.println("4. Pracownik Administracyjny");
         System.out.println("5. powrot");
+    }
+
+    public static void menuSortuj(){
+        System.out.println("SORTUJ");
+        System.out.println("1. Nazwisko");
+        System.out.println("2. Nazwisko i imie");
+        System.out.println("3. Nazwisko i wiek");
+        System.out.println("4. Kurs po nazwisku prowadzacego");
+        System.out.println("5. Kurs po ilosci punktow ECTS");
+        System.out.println("6. powrot");
+    }
+
+    public static void menuUsun(){
+        System.out.println("USUN");
+        System.out.println("1. Pracownik");
+        System.out.println("2. Student");
+        System.out.println("3. Kurs");
+        System.out.println("4. powrot");
+    }
+    public static void menuUsunPracownik(){
+        System.out.println("USUN");
+        System.out.println("1. Po nazwisku");
+        System.out.println("2. Po imieniu");
+        System.out.println("3. Po stazu pracy");
+        System.out.println("4. Po stanowisku");
+        System.out.println("5. powrot");
+    }
+    public static void menuUsunStudent(){
+        System.out.println("USUN");
+        System.out.println("1. Po nazwisku");
+        System.out.println("2. Po imieniu");
+        System.out.println("3. Po nr indeksu");
+        System.out.println("4. Po roku studiow");
+        System.out.println("5. powrot");
+    }
+    public static void menuUsunKurs(){
+        System.out.println("USUN");
+        System.out.println("1. Po nazwie kursu");
+        System.out.println("2. Po nazwiku prowadzacego");
+        System.out.println("3. Po pkt ECTS");
+        System.out.println("4. powrot");
     }
 
     public static void wyswietlWszystko(){
