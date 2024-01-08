@@ -11,7 +11,7 @@ public class Sortowanie {
         }
     }
     public static void poImieniuINazwisku(List<Osoba> osoby){
-        Comparator<Osoba> comparator = Comparator.comparing(Osoba::getImie).thenComparing(Osoba::getImie);
+        Comparator<Osoba> comparator = Comparator.comparing(Osoba::getNazwisko).thenComparing(Osoba::getImie);
         Collections.sort(osoby, comparator);
         for(Osoba i : osoby){
             System.out.println(i.getNazwisko()+" "+i.getImie());
