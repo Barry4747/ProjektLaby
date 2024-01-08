@@ -91,7 +91,7 @@ public class DodawanieOsobIKursow {
             stNiestacjonarne=scan.nextLine();
         }while (!isBoolean(stNiestacjonarne));
 
-        Main.osoba.add(new Student(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, nrIndeksu, Integer.parseInt(rokStudiow), tempList, Boolean.parseBoolean(erasmus), Boolean.parseBoolean(pierwszegoSt), Boolean.parseBoolean(drugiegoSt), Boolean.parseBoolean(stStacjonarne), Boolean.parseBoolean(stNiestacjonarne)));
+        Main.osoba.add(new Student(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, nrIndeksu, Integer.parseInt(rokStudiow), tempList, Boolean.parseBoolean(erasmus), Boolean.parseBoolean(pierwszegoSt), Boolean.parseBoolean(drugiegoSt), Boolean.parseBoolean(stStacjonarne), Boolean.parseBoolean(stNiestacjonarne), new ArrayList<>()));
     }
     public static void dodajKurs(Scanner scan){
         String nazwa, prowadzacy, pktects;

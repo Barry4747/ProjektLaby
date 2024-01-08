@@ -6,13 +6,14 @@ public class Student extends Osoba implements InterfaceWyswietlanie, Serializabl
     private String nrIndeksu;
     private int rokStudiow;
     private List<Kursy> listaKursow;
+    private List<String> listaOcen;
     private boolean erasmus;
     private boolean Istopnia;
     private boolean IIstopnia;
     private boolean stStacjonarne;
     private boolean stNiestacjonarne;
     public Student(String imie, String nazwisko, String email, String PESEL, byte wiek, String plec, String nrIndeksu, int rokStudiow, List<Kursy> listaKursow, boolean erasmus,
-                   boolean Istopnia, boolean IIstopnia, boolean stStacjonarne, boolean stNiestacjonarne){
+                   boolean Istopnia, boolean IIstopnia, boolean stStacjonarne, boolean stNiestacjonarne, List<String> listaOcen){
         super(imie, nazwisko, email, PESEL, wiek, plec);
         this.nrIndeksu=nrIndeksu;
         this.rokStudiow=rokStudiow;
@@ -22,6 +23,7 @@ public class Student extends Osoba implements InterfaceWyswietlanie, Serializabl
         this.IIstopnia=IIstopnia;
         this.stStacjonarne=stStacjonarne;
         this.stNiestacjonarne=stNiestacjonarne;
+        this.listaOcen=listaOcen;
     }
     private static final long serialVersionUID = -2751420503953502693L;
     public String getNrIndeksu() {
@@ -98,6 +100,14 @@ public class Student extends Osoba implements InterfaceWyswietlanie, Serializabl
             }
     }
 
+    public List<String> getListaOcen() {
+        return listaOcen;
+    }
+
+    public void setListaOcen(List<String> listaOcen) {
+        this.listaOcen = listaOcen;
+    }
+
     @Override
     public String toString() {
         return super.toString()+
@@ -109,7 +119,8 @@ public class Student extends Osoba implements InterfaceWyswietlanie, Serializabl
                 "I stopnia: " + Istopnia +"\n" +
                 "II stopnia: " + IIstopnia +"\n" +
                 "Studia stacjonarne: " + stStacjonarne +"\n" +
-                "Studia niestacjonarne: " + stNiestacjonarne +"\n";
+                "Studia niestacjonarne: " + stNiestacjonarne +"\n"+
+                "Lista ocen: " + listaOcen+"\n";
     }
 
     @Override

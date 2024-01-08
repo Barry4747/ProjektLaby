@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -28,6 +30,9 @@ public class Menu {
                     System.out.println("Zapisano zmiany");
                     break;
                 case "6":
+                    dodajOcene();
+                    break;
+                case "7":
                     break Loop;
                 default:
                     System.out.println("Nieprawidlowa opcja!");
@@ -381,7 +386,8 @@ public class Menu {
         System.out.println("3. Sortuj");
         System.out.println("4. Usun");
         System.out.println("5. Zapisz zmiany");
-        System.out.println("6. Wyjscie");
+        System.out.println("6. Dodaj ocene");
+        System.out.println("7. Wyjscie");
     }
     public static void menuWyswietl(){
         System.out.println("WYSWIETL");
@@ -698,6 +704,40 @@ public class Menu {
         }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono takiej osoby!");
+        }
+    }
+
+
+    //extras
+    public static void dodajOcene(){
+        Scanner scan = new Scanner(System.in);
+        String wybor;
+        List<Student> tempList = new ArrayList<>();
+        int counter=0;
+        for(Osoba i : Main.osoba){
+            if(i instanceof Student){
+                counter++;
+                System.out.println(counter+". "+i.getNazwisko()+" "+ i.getImie());
+                tempList.add((Student) i);
+            }
+        }
+
+        while (true){
+            System.out.println("Wybierz studenta");
+            wybor=scan.nextLine();
+            if(wybor.matches("[0-9]+")){
+                if(Integer.parseInt(wybor)<=counter){
+                    System.out.print("Podaj ocene: ");
+                    String temp=scan.nextLine();
+                    tempList.get(Integer.parseInt(wybor)-1).getListaOcen().add(temp);
+                    System.out.println("Dodano ocene");
+
+                    //tutaj powiadomienie dla obserwatora
+
+                    return;
+                }
+            }
+            System.out.println("Nieprawidlowy numer!");
         }
     }
 }
