@@ -27,6 +27,9 @@ public class Menu {
                 case "5":
                     Serializacja.zapiszListeKursow(Main.listaKursow);
                     Serializacja.zapiszListeOsob(Main.osoba);
+                    for(Kursy i: Main.listaKursow){
+                        Serializacja.zapiszListeObs(i.getKursant().getListaObserwatorow(), i);
+                    }
                     System.out.println("Zapisano zmiany");
                     break;
                 case "6":
@@ -389,7 +392,7 @@ public class Menu {
         System.out.println("3. Sortuj");
         System.out.println("4. Usun");
         System.out.println("5. Zapisz zmiany");
-        System.out.println("6. Dodaj ocene (obserwator)");
+        System.out.println("6. Dodaj ocene");
         System.out.println("7. Licz premie (strategia)");
         System.out.println("8. Wyjscie");
     }
