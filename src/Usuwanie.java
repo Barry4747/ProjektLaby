@@ -11,6 +11,14 @@ public class Usuwanie {
         String wybor = scan.nextLine();
         for(int i=0; i<list.size(); i++){
             if(list.get(i) instanceof PracownikUczelni && list.get(i).getNazwisko().equals(wybor)){
+                int tempInt=Main.listaKursow.size();
+                int counter=0;
+                for(int j=0; j<tempInt; j++){
+                    if(Main.listaKursow.get(j).getProwadzacy().getNazwisko().equals(list.get(i))){
+                        Main.listaKursow.remove(j-counter);
+                        counter++;
+                    }
+                }
                 list.remove(i);
                 System.out.println("Pracownik usuniety");
                 i--;
@@ -24,6 +32,14 @@ public class Usuwanie {
         String wybor = scan.nextLine();
         for(int i=0; i<list.size(); i++){
             if(list.get(i) instanceof PracownikUczelni && list.get(i).getImie().equals(wybor)){
+                int tempInt=Main.listaKursow.size();
+                int counter=0;
+                for(int j=0; j<tempInt; j++){
+                    if(Main.listaKursow.get(j).getProwadzacy().getNazwisko().equals(list.get(i))){
+                        Main.listaKursow.remove(j-counter);
+                        counter++;
+                    }
+                }
                 list.remove(i);
                 System.out.println("Pracownik usuniety");
                 i--;
@@ -38,6 +54,14 @@ public class Usuwanie {
         if(wybor.matches("[0-9]+")) {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i) instanceof PracownikUczelni && ((PracownikUczelni) list.get(i)).getStazPracy() == Integer.parseInt(wybor)) {
+                    int tempInt=Main.listaKursow.size();
+                    int counter=0;
+                    for(int j=0; j<tempInt; j++){
+                        if(Main.listaKursow.get(j).getProwadzacy().getNazwisko().equals(list.get(i))){
+                            Main.listaKursow.remove(j-counter);
+                            counter++;
+                        }
+                    }
                     list.remove(i);
                     System.out.println("Pracownik usuniety");
                     i--;
@@ -52,6 +76,14 @@ public class Usuwanie {
         String wybor = scan.nextLine();
         for(int i=0; i<list.size(); i++){
             if(list.get(i) instanceof PracownikUczelni && ((PracownikUczelni) list.get(i)).getStanowisko().equals(wybor)){
+                int tempInt=Main.listaKursow.size();
+                int counter=0;
+                for(int j=0; j<tempInt; j++){
+                    if(Main.listaKursow.get(j).getProwadzacy().getNazwisko().equals(list.get(i))){
+                        Main.listaKursow.remove(j-counter);
+                        counter++;
+                    }
+                }
                 list.remove(i);
                 System.out.println("Pracownik usuniety");
                 i--;
