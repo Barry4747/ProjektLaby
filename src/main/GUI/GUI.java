@@ -1,12 +1,21 @@
 package main.GUI;
 
+import main.java.Main;
+import main.java.PracownikAdministracyjny;
+import main.java.PracownikBadawczoDydaktyczny;
+import main.java.Student;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUI {
     public JFrame ramka;
     public JPanel panelCentrumGlowny;
-    public JPanel panelGoraGlowny;
+    public JPanel panelLewyGlowny;
     public JPanel panelGlowny;
     public JPanel panelPremia;
     public JButton buttonWyjscia;
@@ -52,40 +61,91 @@ public class GUI {
         buttonDodajOcene = new JButton("Dodaj ocene");
         buttonPremia = new JButton("Licz premie");
 
-        buttonSetup(buttonWyjscia, 750, 50);
-        buttonSetup(buttonWyswietl, 100, 50);
-        buttonSetup(buttonDodaj, 100, 150);
-        buttonSetup(buttonSortuj, 100, 250);
-        buttonSetup(buttonUsun, 100, 350);
-        buttonSetup(buttonZapisz, 750, 150);
-        buttonSetup(buttonDodajOcene, 100, 450);
-        buttonSetup(buttonPremia, 100, 550);
+        buttonSetup(buttonWyjscia);
+        buttonWyjscia.setBounds(750,50,200,50);
+
+        buttonSetup(buttonWyswietl);
+        buttonWyswietl.setBounds(100,50,200,50);
+
+        buttonSetup(buttonDodaj);
+        buttonDodaj.setBounds(100,150,200,50);
+
+        buttonSetup(buttonSortuj);
+        buttonSortuj.setBounds(100,250,200,50);
+
+        buttonSetup(buttonUsun);
+        buttonUsun.setBounds(100,350,200,50);
+
+        buttonSetup(buttonZapisz);
+        buttonZapisz.setBounds(750,150,200,50);
+
+        buttonSetup(buttonDodajOcene);
+        buttonDodajOcene.setBounds(100,450,200,50);
+
+        buttonSetup(buttonPremia);
+        buttonPremia.setBounds(100, 550, 200, 50);
+
+
+        //action listeners
+
 
         //panel boczny glowny lewy
-        panelGoraGlowny = new JPanel();
+        panelLewyGlowny = new JPanel();
         JLabel lebPanelLewy = new JLabel();
-        Icon iconPWR = new ImageIcon("pwrIcon.png");
+        Icon iconPWR = new ImageIcon("C:\\Users\\barte\\Documents\\GitHub\\ProjektLaby\\src\\resources\\pwrIcon.png");
         lebPanelLewy.setIcon(iconPWR);
-        panelGoraGlowny.add(lebPanelLewy);
-        panelGoraGlowny.setSize(200,700);
+        panelLewyGlowny.add(lebPanelLewy);
+        panelLewyGlowny.setSize(200,700);
 
 
+        //scrollpane do wyswietlania
 
+        List wizytowki = new ArrayList();
+
+        for(int i=0; i<Main.osoba.size(); i++){
+            if(Main.osoba.get(i) instanceof Student){
+                wizytowki.add(new WizytowkaStudent((Student) Main.osoba.get(i)));
+            }else if(Main.osoba.get(i) instanceof PracownikAdministracyjny){
+                wizytowki.add(new WizytowkaPracownikAdministracyjny((PracownikAdministracyjny) Main.osoba.get(i)));
+            } else if (Main.osoba.get(i) instanceof PracownikBadawczoDydaktyczny) {
+                wizytowki.add(new WizytowkaPracownikBadawczoDydaktyczny((PracownikBadawczoDydaktyczny) Main.osoba.get(i)));
+            }
+        }
+
+        Object[][] dane = new Object[wizytowki.size()][1];
+        String[] naglowek = {"Osoby"};
+
+        for(int i=0; i<wizytowki.size(); i++){
+            dane[i][0] = wizytowki.get(i);
+        }
+        DefaultTableModel model = new DefaultTableModel(dane, naglowek);
+        JTable tabela = new JTable(model);
+        tabela.getColumnModel().getColumn(0).setCellRenderer(new PanelRenderer());
+        tabela.setRowHeight(250);
+
+        JScrollPane wyswietlanieScrollPane = new JScrollPane(tabela, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        wyswietlanieScrollPane.setBounds(600,200,800,800);
+        panelCentrumGlowny.add(wyswietlanieScrollPane);
 
         //dodawanie do panelu glownego
-        panelGlowny.add(BorderLayout.WEST, panelGoraGlowny);
+        panelGlowny.add(BorderLayout.WEST, panelLewyGlowny);
         panelGlowny.add(BorderLayout.CENTER, panelCentrumGlowny);
 
-
         ramka.add(panelGlowny);
-        ramka.setSize(1300,700);
+        ramka.setSize(1920,1080);
         ramka.setVisible(true);
     }
-    public void buttonSetup(JButton button, int x, int y){
-        button.setBounds(x,y,200,50);
-        button.addActionListener(new Event(this));
+    public void buttonSetup(JButton button){
         button.setBackground(Color.WHITE);
         button.setFont(new Font("Arial", Font.PLAIN, 12));
-        panelCentrumGlowny.add(button);
+        //panelCentrumGlowny.add(button);
+    }
+    private static class PanelRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                       boolean hasFocus, int row, int column) {
+            return (Component) value;
+        }
     }
 }

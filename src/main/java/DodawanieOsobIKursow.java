@@ -100,7 +100,7 @@ public class DodawanieOsobIKursow {
             i.getKursant().powiadomObserwadorow("Do kursu "+ i.getNazwaKursu()+ " dolaczyl "+ imie+" "+nazwisko);
         }
 
-        Main.osoba.add(new Student(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, nrIndeksu, Integer.parseInt(rokStudiow), tempList, Boolean.parseBoolean(erasmus), Boolean.parseBoolean(pierwszegoSt), Boolean.parseBoolean(drugiegoSt), Boolean.parseBoolean(stStacjonarne), Boolean.parseBoolean(stNiestacjonarne), new ArrayList<>()));
+        Main.osoba.add(new Student(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, nrIndeksu, Integer.parseInt(rokStudiow), tempList, Boolean.parseBoolean(erasmus), Boolean.parseBoolean(pierwszegoSt), Boolean.parseBoolean(drugiegoSt), Boolean.parseBoolean(stStacjonarne), Boolean.parseBoolean(stNiestacjonarne)));
     }
     public static void dodajKurs(Scanner scan){
         String nazwa, prowadzacy, pktects;
@@ -262,7 +262,7 @@ public class DodawanieOsobIKursow {
             liczbaNadgodzin=scan.nextLine();
         }while (!isNumeric(liczbaNadgodzin));
 
-        Main.osoba.add(new PracownikBadawczoDydaktyczny(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, stanowisko, Byte.parseByte(staz),  Float.parseFloat(pensja), 0, Integer.parseInt(liczbaNadgodzin)));
+        Main.osoba.add(new PracownikAdministracyjny(imie, nazwisko, adresEmail, pesel, Byte.parseByte(wiek), plec, stanowisko, Byte.parseByte(staz),  Float.parseFloat(pensja), 0, Integer.parseInt(liczbaNadgodzin)));
     }
 
     public static boolean isNumeric(String str) {
