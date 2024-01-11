@@ -6,6 +6,7 @@ import main.strategiaPremia.PremiaZaStaz;
 import main.strategiaPremia.StrategiaPremia;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,6 +22,7 @@ public class Menu {
             switch (wybor) {
                 case "1":
                     opcjaWyswietl(wybor, scan);
+                    usunPowtorki();
                     break;
                 case "2":
                     opcjaDodaj(wybor, scan);
@@ -63,6 +65,7 @@ public class Menu {
                 case "1":
                     wyswietlWszystko();
                     wyswietlWszystkieKursy();
+
                     break;
                 case "2":
                     wyswietlStudenci(wybor, scan);
@@ -818,7 +821,24 @@ public class Menu {
 
     }
 
-    public void usunPowtorki(){
-        
+    public static void usunPowtorki(){
+        ArrayList<Student> listaStudentow = new ArrayList<>();
+        ArrayList<PracownikUczelni> listaPracownikow = new ArrayList<>();
+
+        for(Osoba i : Main.osoba){
+            if(i instanceof Student){
+                listaStudentow.add((Student) i);
+            }else{
+                listaPracownikow.add((PracownikUczelni) i);
+            }
+        }
+        ArrayList<Student> newlistaStudentow = new ArrayList<>(new HashSet<>(listaStudentow));
+        ArrayList<PracownikUczelni> newlistaPracownikow = new ArrayList<>(new HashSet<>(listaPracownikow));
+
+        Main.osoba.clear();
+
+        Main.osoba.addAll(newlistaStudentow);
+        Main.osoba.addAll(newlistaPracownikow);
+
     }
 }
