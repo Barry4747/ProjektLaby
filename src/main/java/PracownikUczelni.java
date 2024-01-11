@@ -1,5 +1,7 @@
 package main.java;
 
+import java.util.Objects;
+
 public abstract class PracownikUczelni extends Osoba implements InterfaceWyswietlanie {
     private String stanowisko;
     private byte stazPracy;
@@ -13,6 +15,11 @@ public abstract class PracownikUczelni extends Osoba implements InterfaceWyswiet
         this.pensja=pensja;
     }
     private static final long serialVersionUID = 6714244666619964016L;
+
+    public static int hash(String pesel) {
+        return 0;
+    }
+
     public String getStanowisko() {
         return stanowisko;
     }
@@ -53,4 +60,17 @@ public abstract class PracownikUczelni extends Osoba implements InterfaceWyswiet
                 "Pensja: " + pensja+ "\n" ;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+//        if (equals(object)) return false;
+        PracownikUczelni that = (PracownikUczelni) object;
+        return Objects.equals(getPESEL(), that.getPESEL());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getPESEL());
+    }
 }

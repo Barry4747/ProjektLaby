@@ -22,7 +22,6 @@ public class Menu {
             switch (wybor) {
                 case "1":
                     opcjaWyswietl(wybor, scan);
-                    usunPowtorki();
                     break;
                 case "2":
                     opcjaDodaj(wybor, scan);
@@ -48,6 +47,9 @@ public class Menu {
                     premia();
                     break;
                 case "8":
+                    usunPowtorki();
+                    break;
+                case "9":
                     break Loop;
                 default:
                     System.out.println("Nieprawidlowa opcja!");
@@ -404,7 +406,8 @@ public class Menu {
         System.out.println("5. Zapisz zmiany");
         System.out.println("6. Dodaj ocene");
         System.out.println("7. Licz premie (strategia)");
-        System.out.println("8. Wyjscie");
+        System.out.println("8. Usun powtorki");
+        System.out.println("9. Wyjscie");
     }
     public static void menuWyswietl(){
         System.out.println("WYSWIETL");
@@ -822,23 +825,7 @@ public class Menu {
     }
 
     public static void usunPowtorki(){
-        ArrayList<Student> listaStudentow = new ArrayList<>();
-        ArrayList<PracownikUczelni> listaPracownikow = new ArrayList<>();
-
-        for(Osoba i : Main.osoba){
-            if(i instanceof Student){
-                listaStudentow.add((Student) i);
-            }else{
-                listaPracownikow.add((PracownikUczelni) i);
-            }
-        }
-        ArrayList<Student> newlistaStudentow = new ArrayList<>(new HashSet<>(listaStudentow));
-        ArrayList<PracownikUczelni> newlistaPracownikow = new ArrayList<>(new HashSet<>(listaPracownikow));
-
-        Main.osoba.clear();
-
-        Main.osoba.addAll(newlistaStudentow);
-        Main.osoba.addAll(newlistaPracownikow);
-
+        Main.osoba=new ArrayList<>(new HashSet<>(Main.osoba));
+        System.out.println("Usunieto powtorki");
     }
 }

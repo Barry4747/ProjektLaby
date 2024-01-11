@@ -78,15 +78,8 @@ public abstract class Osoba implements InterfaceWyswietlanie, Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        Osoba osoba = (Osoba) object;
-        return Objects.equals(PESEL, osoba.PESEL);
-    }
+    public abstract boolean equals(Object object) ;
 
     @Override
-    public int hashCode() {
-        return Objects.hash(PESEL);
-    }
+    public abstract int hashCode() ;
 }

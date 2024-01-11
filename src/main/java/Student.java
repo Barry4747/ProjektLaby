@@ -139,13 +139,13 @@ public class Student extends Osoba implements InterfaceWyswietlanie, Serializabl
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        if (!super.equals(object)) return false;
+//        if (equals(object)) return false;
         Student student = (Student) object;
         return Objects.equals(nrIndeksu, student.nrIndeksu);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), nrIndeksu);
+        return Objects.hash(nrIndeksu);
     }
 }

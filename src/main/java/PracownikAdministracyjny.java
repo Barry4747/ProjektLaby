@@ -52,4 +52,6 @@ public class PracownikAdministracyjny extends PracownikUczelni implements Interf
                 "Staz pracy: " + this.getStazPracy());
         System.out.println("-------------------------------------");
     }
+
+
 }
