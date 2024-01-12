@@ -1,14 +1,13 @@
 package main.GUI;
 
-import main.java.Main;
-import main.java.PracownikAdministracyjny;
-import main.java.PracownikBadawczoDydaktyczny;
-import main.java.Student;
+import main.java.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,15 +23,16 @@ public class GUI {
     public JButton buttonSortuj;
     public JButton buttonUsun;
     public JButton buttonZapisz;
-    public JButton buttonDodajOcene;
     public JButton buttonPremia;
     public JRadioButton radioPremiaOpcja1;
     public JRadioButton radioPremiaOpcja2;
     public ButtonGroup grupaPremia;
+    private List wizytowki;
 
     public void rysuj(){
         ramka= new JFrame();
         ramka.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        ramka.setTitle("Politechnika Wrocławska");
 
         panelGlowny = new JPanel();
         panelGlowny.setLayout(new BorderLayout());
@@ -58,32 +58,59 @@ public class GUI {
         buttonSortuj = new JButton("Sortuj");
         buttonUsun = new JButton("Usun");
         buttonZapisz = new JButton("Zapisz");
-        buttonDodajOcene = new JButton("Dodaj ocene");
         buttonPremia = new JButton("Licz premie");
 
-        buttonSetup(buttonWyjscia);
-        buttonWyjscia.setBounds(750,50,200,50);
+        buttonWyjscia.setFont(new Font("Arial", Font.PLAIN, 12));
+        buttonWyjscia.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ramka.dispose();
+            }
+        });
+        buttonWyjscia.setBounds(0,180,200,50);
+        buttonWyjscia.setFocusPainted(false);
+        buttonWyjscia.setBackground(new Color(224, 127, 115, 255));
 
-        buttonSetup(buttonWyswietl);
-        buttonWyswietl.setBounds(100,50,200,50);
+        buttonWyswietl.setFont(new Font("Arial", Font.PLAIN, 12));
+        buttonWyswietl.setBounds(0,0,200,50);
+        buttonWyswietl.setFocusPainted(false);
+        buttonWyswietl.setBackground(new Color(224, 127, 115, 255));
 
-        buttonSetup(buttonDodaj);
-        buttonDodaj.setBounds(100,150,200,50);
+        buttonDodaj.setFont(new Font("Arial", Font.PLAIN, 12));
+        buttonDodaj.setBounds(0,60,200,50);
+        buttonDodaj.setFocusPainted(false);
+        buttonDodaj.setBackground(new Color(224, 127, 115, 255));
 
-        buttonSetup(buttonSortuj);
-        buttonSortuj.setBounds(100,250,200,50);
+        buttonUsun.setFont(new Font("Arial", Font.PLAIN, 12));
+        buttonUsun.setBounds(0,120,200,50);
+        buttonUsun.setFocusPainted(false);
+        buttonUsun.setBackground(new Color(224, 127, 115, 255));
 
-        buttonSetup(buttonUsun);
-        buttonUsun.setBounds(100,350,200,50);
 
-        buttonSetup(buttonZapisz);
-        buttonZapisz.setBounds(750,150,200,50);
+        buttonZapisz.setBounds(150,925, 40,50);
+        buttonZapisz.setBackground(new Color(178, 178, 178, 186));
+        buttonZapisz.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\barte\\Documents\\GitHub\\ProjektLaby\\src\\resources\\zapisz.png").getImage().getScaledInstance(buttonZapisz.getWidth(), buttonZapisz.getHeight(), Image.SCALE_SMOOTH)));
+        buttonZapisz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Serializacja.zapiszListeOsob(Main.osoba);
+                Serializacja.zapiszListeKursow(Main.listaKursow);
+                for(Kursy i: Main.listaKursow){
+                    Serializacja.zapiszListeObs(i.getKursant().getListaObserwatorow(), i);
+                }
+            }
+        });
 
-        buttonSetup(buttonDodajOcene);
-        buttonDodajOcene.setBounds(100,450,200,50);
 
-        buttonSetup(buttonPremia);
-        buttonPremia.setBounds(100, 550, 200, 50);
+        JPanel panelMenu = new JPanel();
+        panelMenu.setLayout(null);
+        panelMenu.add(buttonWyswietl);
+        panelMenu.add(buttonDodaj);
+        panelMenu.add(buttonUsun);
+        panelMenu.add(buttonWyjscia);
+        panelMenu.setOpaque(true);
+        panelMenu.setBackground(new Color(176, 29, 9, 255));
+        panelMenu.setBounds(4,350, 250, 250);
 
 
         //action listeners
@@ -91,16 +118,21 @@ public class GUI {
 
         //panel boczny glowny lewy
         panelLewyGlowny = new JPanel();
+        panelLewyGlowny.setLayout(new FlowLayout());
         JLabel lebPanelLewy = new JLabel();
+        lebPanelLewy.setBounds(0,0,200,700);
         Icon iconPWR = new ImageIcon("C:\\Users\\barte\\Documents\\GitHub\\ProjektLaby\\src\\resources\\pwrIcon.png");
         lebPanelLewy.setIcon(iconPWR);
+        lebPanelLewy.setLayout(null);
+        lebPanelLewy.add(panelMenu);
+        lebPanelLewy.add(buttonZapisz);
         panelLewyGlowny.add(lebPanelLewy);
         panelLewyGlowny.setSize(200,700);
 
 
         //scrollpane do wyswietlania
 
-        List wizytowki = new ArrayList();
+        wizytowki = new ArrayList();
 
         for(int i=0; i<Main.osoba.size(); i++){
             if(Main.osoba.get(i) instanceof Student){
@@ -125,7 +157,7 @@ public class GUI {
 
         JScrollPane wyswietlanieScrollPane = new JScrollPane(tabela, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        wyswietlanieScrollPane.setBounds(600,200,800,800);
+        wyswietlanieScrollPane.setBounds(800,100,800,900);
         panelCentrumGlowny.add(wyswietlanieScrollPane);
 
         //dodawanie do panelu glownego
