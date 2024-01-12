@@ -130,11 +130,11 @@ public class GUI {
         //scrollpane do wyswietlania
 
         WyswietlanieGUI wyswietlanieGUI = new WyswietlanieGUI();
-        wyswietlanieGUI.setBounds(800,100,800,900);
+        wyswietlanieGUI.setBounds(800,50,800,900);
         panelCentrumGlowny.add(wyswietlanieGUI);
 
         //panel filtrowania wyswietlania
-        FiltrowanieWyswietlaniaGUI filtrowaniePanel = new FiltrowanieWyswietlaniaGUI();
+        FiltrowanieWyswietlaniaGUI filtrowaniePanel = new FiltrowanieWyswietlaniaGUI(wyswietlanieGUI.model, wyswietlanieGUI.tabela);
         filtrowaniePanel.setBounds(100,200,600,600);
         filtrowaniePanel.setBackground(Color.GRAY);
         panelCentrumGlowny.add(filtrowaniePanel);

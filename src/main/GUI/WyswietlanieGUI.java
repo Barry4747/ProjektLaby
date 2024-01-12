@@ -1,19 +1,20 @@
 package main.GUI;
 
-import main.java.Main;
-import main.java.PracownikAdministracyjny;
-import main.java.PracownikBadawczoDydaktyczny;
-import main.java.Student;
+import main.java.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class WyswietlanieGUI extends JPanel {
     private List wizytowki;
+    public DefaultTableModel model;
+    public JTable tabela;
     public WyswietlanieGUI(){
         wizytowki = new ArrayList();
         this.setLayout(new BorderLayout());
@@ -34,15 +35,21 @@ public class WyswietlanieGUI extends JPanel {
         for(int i=0; i<wizytowki.size(); i++){
             dane[i][0] = wizytowki.get(i);
         }
-        DefaultTableModel model = new DefaultTableModel(dane, naglowek);
-        JTable tabela = new JTable(model);
+        model = new DefaultTableModel(dane, naglowek);
+        tabela = new JTable(model);
         tabela.getColumnModel().getColumn(0).setCellRenderer(new PanelRenderer());
         tabela.setRowHeight(250);
 
         JScrollPane wyswietlanieScrollPane = new JScrollPane(tabela, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         //wyswietlanieScrollPane.setBounds(800,100,800,900);
+
         this.add(wyswietlanieScrollPane, BorderLayout.CENTER);
+    }
+    public void aktualizujTabele(Object[][] noweDane){
+        String[] naglowek = {"Osoby"};
+        model.setDataVector(noweDane, naglowek);
+        tabela.getColumnModel().getColumn(0).setCellRenderer(new PanelRenderer());
     }
 
     private class PanelRenderer extends DefaultTableCellRenderer {
@@ -52,6 +59,5 @@ public class WyswietlanieGUI extends JPanel {
             return (Component) value;
         }
     }
-
 
 }

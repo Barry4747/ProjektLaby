@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 public class Menu {
     private static boolean czyZnaleziono;
+    private static List lista = new ArrayList();
 
     public static void startMenu(){
         menu();
@@ -493,24 +494,30 @@ public class Menu {
         System.out.println("4. powrot");
     }
 
-    public static void wyswietlWszystko(){
+    public static List wyswietlWszystko(){
+        lista = new ArrayList();
         if(Main.osoba.isEmpty()){
             System.out.println("Nie ma osob na liscie!");
-            return;
+            return new ArrayList();
         }
-        for(int i=0; i< Main.osoba.size(); i++)
+        for(int i=0; i< Main.osoba.size(); i++) {
             Main.osoba.get(i).wyswietlInfo();
+            lista.add(Main.osoba.get(i));
+        }return lista;
     }
-    public static void wyswietlStudentow(){
+    public static List wyswietlStudentow(){
         czyZnaleziono = false;
+        lista = new ArrayList();
         for(int i=0; i<Main.osoba.size(); i++)
             if(Main.osoba.get(i) instanceof Student) {
                 Main.osoba.get(i).wyswietlInfo();
                 czyZnaleziono=true;
+                lista.add(Main.osoba.get(i));
             }
         if (!czyZnaleziono){
             System.out.println("Nie znaleziono studentow!");
-        }
+            return new ArrayList();
+        }return lista;
     }
     public static void wyswietlWszystkieKursy(){
         if(Main.listaKursow.isEmpty()){
@@ -520,104 +527,127 @@ public class Menu {
             Main.listaKursow.get(i).wyswietlInfo();
         }
     }
-    public static void wyswietlPracownikUczelni(){
+    public static List wyswietlPracownikUczelni(){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i<Main.osoba.size(); i++)
             if (Main.osoba.get(i) instanceof PracownikUczelni) {
                 Main.osoba.get(i).wyswietlInfo();
+                lista.add(Main.osoba.get(i));
                 czyZnaleziono=true;
             }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono pracowniko!");
-        }
+            return new ArrayList();
+        }return lista;
     }
 
-    public static void wyszukajPoImieStudent(String imie){
+    public static List wyszukajPoImieStudent(String imie){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i<Main.osoba.size(); i++)
             if(Main.osoba.get(i) instanceof Student) {
                 if (Main.osoba.get(i).getImie().equals(imie)) {
                     Main.osoba.get(i).wyswietlInfo();
+                    lista.add(Main.osoba.get(i));
                     czyZnaleziono = true;
                 }
             }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono takiej osoby!");
-        }
+            return new ArrayList();
+        }return lista;
     }
-    public static void wyszukajPoImiePracownik(String imie){
+    public static List wyszukajPoImiePracownik(String imie){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i<Main.osoba.size(); i++)
             if(Main.osoba.get(i) instanceof PracownikUczelni) {
                 if (Main.osoba.get(i).getImie().equals(imie)) {
                     Main.osoba.get(i).wyswietlInfo();
+                    lista.add(Main.osoba.get(i));
                     czyZnaleziono = true;
                 }
             }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono takiej osoby!");
-        }
+            return new ArrayList<>();
+        }return lista;
     }
-    public static void wyszukajPoNazwiskoStudent(String nazwisko){
+    public static List wyszukajPoNazwiskoStudent(String nazwisko){
         czyZnaleziono=false;
+        lista= new ArrayList();
         for(int i=0; i<Main.osoba.size(); i++)
             if(Main.osoba.get(i) instanceof Student) {
                 if (Main.osoba.get(i).getNazwisko().equals(nazwisko)) {
                     Main.osoba.get(i).wyswietlInfo();
+                    lista.add(Main.osoba.get(i));
                     czyZnaleziono = true;
                 }
             }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono takiej osoby!");
-        }
+            return new ArrayList();
+        }return lista;
     }
-    public static void wyszukajPoNazwiskoPracownik(String nazwisko){
+    public static List wyszukajPoNazwiskoPracownik(String nazwisko){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i<Main.osoba.size(); i++)
             if(Main.osoba.get(i) instanceof PracownikUczelni) {
                 if (Main.osoba.get(i).getNazwisko().equals(nazwisko)) {
                     Main.osoba.get(i).wyswietlInfo();
+                    lista.add(Main.osoba.get(i));
                     czyZnaleziono = true;
                 }
             }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono takiej osoby!");
-        }
+            return new ArrayList();
+        }return lista;
     }
 
     //wyszukiwanie po polach z main.java.Student
 
-    public static void wyszukajPoRokStudiow(int rok){
+    public static List wyszukajPoRokStudiow(int rok){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i<Main.osoba.size(); i++)
             if (Main.osoba.get(i) instanceof Student)
                 if (((Student) Main.osoba.get(i)).getRokStudiow()==rok) {
                     Main.osoba.get(i).wyswietlInfo();
+                    lista.add(Main.osoba.get(i));
                     czyZnaleziono=true;
                 }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono takiej osoby!");
-        }
+            return new ArrayList();
+        }return lista;
     }
-    public static void wyszukajPoNrIndeksu(String numer){
+    public static List wyszukajPoNrIndeksu(String numer){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i<Main.osoba.size(); i++)
             if (Main.osoba.get(i) instanceof Student)
                 if (((Student) Main.osoba.get(i)).getNrIndeksu().equals(numer)) {
                     Main.osoba.get(i).wyswietlInfo();
+                    lista.add(Main.osoba.get(i));
                     czyZnaleziono=true;
                 }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono takiej osoby!");
-        }
+            return new ArrayList();
+        }return lista;
     }
-    public static void wyszukajPoNazwaKursuStudent(String nazwa){
+    public static List wyszukajPoNazwaKursuStudent(String nazwa){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i<Main.osoba.size(); i++){
             if(Main.osoba.get(i) instanceof Student){
                 for(int j = 0; j<((Student) Main.osoba.get(i)).getListaKursow().size(); j++){
                     if(((Student) Main.osoba.get(i)).getListaKursow().get(j).getNazwaKursu().equals(nazwa)){
                         Main.osoba.get(i).wyswietlInfo();
+                        lista.add(Main.osoba.get(i));
                         czyZnaleziono=true;
                     }
                 }
@@ -625,102 +655,124 @@ public class Menu {
         }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono takiej osoby!");
-        }
+            return new ArrayList();
+        }return lista;
     }
     //wyszukiwanie po polach dla main.java.Kursy
-    public static void wyszukajPoNazwaKursu(String nazwa){
+    public static List wyszukajPoNazwaKursu(String nazwa){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i<Main.listaKursow.size(); i++){
             if(Main.listaKursow.get(i).getNazwaKursu().equals(nazwa)){
                 Main.listaKursow.get(i).wyswietlInfo();
+                lista.add(Main.listaKursow.get(i));
                 czyZnaleziono=true;
             }
         }
         if (!czyZnaleziono){
             System.out.println("Nie znaleziono takiego kursu!");
-        }
+            return new ArrayList();
+        }return lista;
     }
-    public static void wyszukajPoNazwiskuProwadzacego(String nazwisko){
+    public static List wyszukajPoNazwiskuProwadzacego(String nazwisko){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i<Main.listaKursow.size(); i++){
             if (Main.listaKursow.get(i).getProwadzacy().getNazwisko().equals(nazwisko)){
                 Main.listaKursow.get(i).wyswietlInfo();
+                lista.add(Main.listaKursow.get(i));
                 czyZnaleziono=true;
             }
         }
         if (!czyZnaleziono){
             System.out.println("Nie znaleziono takiego kursu!");
-        }
+            return new ArrayList();
+        }return lista;
     }
-    public static void wyszukajPoPktECTS(float punkty){
+    public static List wyszukajPoPktECTS(float punkty){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i<Main.listaKursow.size(); i++){
             if (Main.listaKursow.get(i).getPktECTS()==punkty){
                 Main.listaKursow.get(i).wyswietlInfo();
+                lista.add(Main.listaKursow.get(i));
                 czyZnaleziono=true;
             }
         }
         if (!czyZnaleziono){
             System.out.println("Nie znaleziono takiego kursu!");
-        }
+            return new ArrayList();
+        }return lista;
     }
 
 
     //wyszukiwanie po polach dla main.java.PracownikUczelni
 
-    public static void wyszukajPoStanowisko(String stanowisko){
+    public static List wyszukajPoStanowisko(String stanowisko){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i<Main.osoba.size(); i++){
             if(Main.osoba.get(i) instanceof PracownikUczelni){
                 if(((PracownikUczelni)Main.osoba.get(i)).getStanowisko().equals(stanowisko)){
                     Main.osoba.get(i).wyswietlInfo();
+                    lista.add(Main.osoba.get(i));
                     czyZnaleziono=true;
                 }
             }
         }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono takiej osoby!");
-        }
+            return new ArrayList<>();
+        }return lista;
     }
-    public static void wyszukajPoStazPracy(byte staz){
+    public static List wyszukajPoStazPracy(byte staz){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i< Main.osoba.size(); i++)
             if(Main.osoba.get(i) instanceof PracownikUczelni)
                 if(((PracownikUczelni) Main.osoba.get(i)).getStazPracy()==staz) {
                     Main.osoba.get(i).wyswietlInfo();
+                    lista.add(Main.osoba.get(i));
                     czyZnaleziono=true;
                 }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono takiej osoby!");
-        }
+            return new ArrayList<>();
+        }return lista;
     }
-    public static void wyszukajPoLiczbaNadgodzin(int liczbaNadgodzin){
+    public static List wyszukajPoLiczbaNadgodzin(int liczbaNadgodzin){
         czyZnaleziono=false;
+        lista = new ArrayList();
         for(int i=0; i<Main.osoba.size(); i++){
             if(Main.osoba.get(i) instanceof PracownikAdministracyjny){
                 if(((PracownikAdministracyjny) Main.osoba.get(i)).getLiczbaNadgodzin()==liczbaNadgodzin){
                     Main.osoba.get(i).wyswietlInfo();
+                    lista.add(Main.osoba.get(i));
                     czyZnaleziono=true;
                 }
             }
         }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono takiej osoby!");
-        }
+            return new ArrayList();
+        }return lista;
     }
-    public static void wyszukajPoPensja(float pensja){
+    public static List wyszukajPoPensja(float pensja){
         czyZnaleziono = false;
+        lista = new ArrayList();
         for(int i=0; i<Main.osoba.size(); i++){
             if(Main.osoba.get(i) instanceof PracownikUczelni){
                 if(((PracownikUczelni) Main.osoba.get(i)).getPensja()==pensja){
                     Main.osoba.get(i).wyswietlInfo();
+                    lista.add(Main.osoba.get(i));
                     czyZnaleziono=true;
                 }
             }
         }
         if(!czyZnaleziono){
             System.out.println("Nie znaleziono takiej osoby!");
-        }
+            return new ArrayList();
+        }return lista;
     }
 
     public static void premia(){
