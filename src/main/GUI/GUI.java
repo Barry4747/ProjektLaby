@@ -13,7 +13,7 @@ import java.util.List;
 
 public class GUI {
     public JFrame ramka;
-    public JPanel panelCentrumGlowny;
+    public GradientPanel panelCentrumGlowny;
     public JPanel panelLewyGlowny;
     public JPanel panelGlowny;
     public JPanel panelPremia;
@@ -27,7 +27,6 @@ public class GUI {
     public JRadioButton radioPremiaOpcja1;
     public JRadioButton radioPremiaOpcja2;
     public ButtonGroup grupaPremia;
-    private List wizytowki;
 
     public void rysuj(){
         ramka= new JFrame();
@@ -37,7 +36,7 @@ public class GUI {
         panelGlowny = new JPanel();
         panelGlowny.setLayout(new BorderLayout());
 
-        panelCentrumGlowny = new JPanel();
+        panelCentrumGlowny = new GradientPanel();
         panelCentrumGlowny.setLayout(null);
 
         panelPremia = new JPanel();
@@ -52,15 +51,15 @@ public class GUI {
 
 
         //buttony panel glowny
-        buttonWyjscia = new JButton("Wyjscie");
-        buttonWyswietl = new JButton("Wyświetl");
-        buttonDodaj = new JButton("Dodaj");
-        buttonSortuj = new JButton("Sortuj");
-        buttonUsun = new JButton("Usun");
-        buttonZapisz = new JButton("Zapisz");
-        buttonPremia = new JButton("Licz premie");
+        buttonWyjscia = new JButton("WYJSCIE");
+        buttonWyswietl = new JButton("WYSWIETL");
+        buttonDodaj = new JButton("DODAJ");
+        buttonSortuj = new JButton("SORTUJ");
+        buttonUsun = new JButton("USUN");
+        buttonZapisz = new JButton("ZAPISZ");
+        buttonPremia = new JButton("LICZ PREMIE");
 
-        buttonWyjscia.setFont(new Font("Arial", Font.PLAIN, 12));
+        buttonWyjscia.setFont(new Font("Arial", Font.PLAIN, 18));
         buttonWyjscia.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,17 +70,17 @@ public class GUI {
         buttonWyjscia.setFocusPainted(false);
         buttonWyjscia.setBackground(new Color(224, 127, 115, 255));
 
-        buttonWyswietl.setFont(new Font("Arial", Font.PLAIN, 12));
+        buttonWyswietl.setFont(new Font("Arial", Font.PLAIN, 18));
         buttonWyswietl.setBounds(0,0,200,50);
         buttonWyswietl.setFocusPainted(false);
         buttonWyswietl.setBackground(new Color(224, 127, 115, 255));
 
-        buttonDodaj.setFont(new Font("Arial", Font.PLAIN, 12));
+        buttonDodaj.setFont(new Font("Arial", Font.PLAIN, 18));
         buttonDodaj.setBounds(0,60,200,50);
         buttonDodaj.setFocusPainted(false);
         buttonDodaj.setBackground(new Color(224, 127, 115, 255));
 
-        buttonUsun.setFont(new Font("Arial", Font.PLAIN, 12));
+        buttonUsun.setFont(new Font("Arial", Font.PLAIN, 18));
         buttonUsun.setBounds(0,120,200,50);
         buttonUsun.setFocusPainted(false);
         buttonUsun.setBackground(new Color(224, 127, 115, 255));
@@ -98,6 +97,7 @@ public class GUI {
                 for(Kursy i: Main.listaKursow){
                     Serializacja.zapiszListeObs(i.getKursant().getListaObserwatorow(), i);
                 }
+                JOptionPane.showMessageDialog(null, "Zapisano zmiany!", "Informacja", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -111,9 +111,6 @@ public class GUI {
         panelMenu.setOpaque(true);
         panelMenu.setBackground(new Color(176, 29, 9, 255));
         panelMenu.setBounds(4,350, 250, 250);
-
-
-        //action listeners
 
 
         //panel boczny glowny lewy
@@ -132,33 +129,34 @@ public class GUI {
 
         //scrollpane do wyswietlania
 
-        wizytowki = new ArrayList();
+        WyswietlanieGUI wyswietlanieGUI = new WyswietlanieGUI();
+        wyswietlanieGUI.setBounds(800,100,800,900);
+        panelCentrumGlowny.add(wyswietlanieGUI);
 
-        for(int i=0; i<Main.osoba.size(); i++){
-            if(Main.osoba.get(i) instanceof Student){
-                wizytowki.add(new WizytowkaStudent((Student) Main.osoba.get(i)));
-            }else if(Main.osoba.get(i) instanceof PracownikAdministracyjny){
-                wizytowki.add(new WizytowkaPracownikAdministracyjny((PracownikAdministracyjny) Main.osoba.get(i)));
-            } else if (Main.osoba.get(i) instanceof PracownikBadawczoDydaktyczny) {
-                wizytowki.add(new WizytowkaPracownikBadawczoDydaktyczny((PracownikBadawczoDydaktyczny) Main.osoba.get(i)));
+        //panel filtrowania wyswietlania
+        FiltrowanieWyswietlaniaGUI filtrowaniePanel = new FiltrowanieWyswietlaniaGUI();
+        filtrowaniePanel.setBounds(100,200,600,600);
+        filtrowaniePanel.setBackground(Color.GRAY);
+        panelCentrumGlowny.add(filtrowaniePanel);
+
+
+        //action listenery
+        buttonWyswietl.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                wyswietlanieGUI.setVisible(true);
+                filtrowaniePanel.setVisible(true);
             }
-        }
+        });
 
-        Object[][] dane = new Object[wizytowki.size()][1];
-        String[] naglowek = {"Osoby"};
+        buttonDodaj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                wyswietlanieGUI.setVisible(false);
+                filtrowaniePanel.setVisible(false);
+            }
+        });
 
-        for(int i=0; i<wizytowki.size(); i++){
-            dane[i][0] = wizytowki.get(i);
-        }
-        DefaultTableModel model = new DefaultTableModel(dane, naglowek);
-        JTable tabela = new JTable(model);
-        tabela.getColumnModel().getColumn(0).setCellRenderer(new PanelRenderer());
-        tabela.setRowHeight(250);
-
-        JScrollPane wyswietlanieScrollPane = new JScrollPane(tabela, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-        wyswietlanieScrollPane.setBounds(800,100,800,900);
-        panelCentrumGlowny.add(wyswietlanieScrollPane);
 
         //dodawanie do panelu glownego
         panelGlowny.add(BorderLayout.WEST, panelLewyGlowny);
@@ -173,11 +171,22 @@ public class GUI {
         button.setFont(new Font("Arial", Font.PLAIN, 12));
         //panelCentrumGlowny.add(button);
     }
-    private static class PanelRenderer extends DefaultTableCellRenderer {
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                                                       boolean hasFocus, int row, int column) {
-            return (Component) value;
-        }
+}
+
+//gradient
+
+class GradientPanel extends JPanel {
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        // Rysuj gradient od białego do szarego
+        Graphics2D g2d = (Graphics2D) g;
+        int width = getWidth();
+        int height = getHeight();
+        GradientPaint gradient = new GradientPaint(0, 0, Color.WHITE, width, height, Color.GRAY);
+        g2d.setPaint(gradient);
+        g2d.fillRect(0, 0, width, height);
     }
 }
