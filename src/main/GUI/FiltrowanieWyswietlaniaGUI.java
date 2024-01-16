@@ -15,6 +15,7 @@ import java.util.Objects;
 
 public class FiltrowanieWyswietlaniaGUI extends JPanel {
     private ArrayList osoby;
+    private ArrayList kursy;
 
     private JButton wszyscyButton;
     private JButton studenciButton;
@@ -22,6 +23,8 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
     private JButton kursyButton;
     private DefaultTableModel model;
     private JTable tabela;
+    private JComboBox<String> comboBox;
+    private JComboBox<String> comboBoxKursy;
 
     public FiltrowanieWyswietlaniaGUI(DefaultTableModel model, JTable tabela){
         this.tabela=tabela;
@@ -38,8 +41,13 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
         filtrujPracownikow.setBounds(100,100,400,400);
         filtrujPracownikow.setVisible(false);
 
+        FiltrujKursy filtrujKursy = new FiltrujKursy();
+        filtrujKursy.setBounds(100,100,400,400);
+        filtrujKursy.setVisible(false);
+
         this.add(filtrujStudentow);
         this.add(filtrujPracownikow);
+        this.add(filtrujKursy);
 
         wszyscyButton = new JButton("WSZYSCY");
         studenciButton = new JButton("STUDENCI");
@@ -56,6 +64,10 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 filtrujPracownikow.setVisible(false);
                 filtrujStudentow.setVisible(false);
+                filtrujKursy.setVisible(false);
+                comboBoxKursy.setVisible(false);
+                comboBox.setVisible(true);
+
 
                 osoby= (ArrayList) Main.osoba;
                 Object[][] noweDane = new Object[Main.osoba.size()][1];
@@ -77,6 +89,9 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 filtrujPracownikow.setVisible(false);
                 filtrujStudentow.setVisible(true);
+                filtrujKursy.setVisible(false);
+                comboBoxKursy.setVisible(false);
+                comboBox.setVisible(true);
 
                 osoby = (ArrayList) Menu.wyswietlStudentow();
 
@@ -93,6 +108,9 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 filtrujPracownikow.setVisible(true);
                 filtrujStudentow.setVisible(false);
+                filtrujKursy.setVisible(false);
+                comboBoxKursy.setVisible(false);
+                comboBox.setVisible(true);
                 osoby = (ArrayList) Menu.wyswietlPracownikUczelni();
 
                 Object[][] noweDane = new Object[osoby.size()][1];
@@ -109,11 +127,30 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
 
         });
 
+        kursyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filtrujPracownikow.setVisible(false);
+                filtrujStudentow.setVisible(false);
+                filtrujKursy.setVisible(true);
+                comboBoxKursy.setVisible(true);
+                comboBox.setVisible(false);
+
+                kursy = (ArrayList) Menu.wyswietlWszystkieKursy();
+
+                Object[][] noweDane = new Object[Main.listaKursow.size()][1];
+
+                for(int i=0; i<Main.listaKursow.size(); i++){
+                    noweDane[i][0] = new WizytowkaKurs(Main.listaKursow.get(i));
+                }
+                aktualizujTabele(noweDane);
+            }
+        });
+
 
 
         //sortowanie
-        JPanel panelSortowanie = new JPanel();
-        panelSortowanie.setLayout(new BoxLayout(panelSortowanie, BoxLayout.X_AXIS));
+
         JLabel ikonaSortowania = new JLabel();
         ikonaSortowania.setSize(50,50);
         ikonaSortowania.setOpaque(true);
@@ -126,7 +163,7 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
                 "nazwisko i wiek"
         };
 
-        JComboBox<String> comboBox = new JComboBox<>(options);
+        comboBox = new JComboBox<>(options);
         comboBox.setSize(100,50);
 
         comboBox.addActionListener(new ActionListener() {
@@ -183,6 +220,44 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
         comboBox.setBounds(50,550,200,50);
         this.add(comboBox);
         this.add(ikonaSortowania);
+
+        //sortowanie kursow
+        String[] optionsKursy = {
+                "nazwisko prowadzącego",
+                "punkty ECTS"
+        };
+
+        comboBoxKursy = new JComboBox<>(optionsKursy);
+        comboBoxKursy.setSize(100,50);
+
+        comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[][] noweDane = new Object[kursy.size()][1];
+                String selectedOption = (String) comboBoxKursy.getSelectedItem();
+                switch (selectedOption) {
+                    case "nazwisko prowadzącego":
+                        kursy= (ArrayList) Sortowanie.kursPoNazwisko(kursy);
+                        for(int i = 0; i< kursy.size(); i++){
+                            noweDane[i][0] = new WizytowkaKurs((Kursy) kursy.get(i));
+                        }
+                        aktualizujTabele(noweDane);
+                        break;
+                    case "punkty ECTS":
+                        kursy= (ArrayList) Sortowanie.kursPoECTS(kursy);
+                        for(int i = 0; i< kursy.size(); i++){
+                            noweDane[i][0] = new WizytowkaKurs((Kursy) kursy.get(i));
+                        }
+                        aktualizujTabele(noweDane);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        comboBoxKursy.setBounds(50,550,200,50);
+        this.add(comboBoxKursy);
+        comboBoxKursy.setVisible(false);
 
     }
 
@@ -434,6 +509,95 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             this.add(txtNadgodziny);
             this.add(labelPensja);
             this.add(txtPensja);
+            this.add(zatwierdz);
+            this.add(usunFiltry);
+            this.setBackground(new Color(126, 126, 126, 255));
+        }
+        public void setupLabel(JLabel label){
+            label.setBorder(new LineBorder(Color.BLACK, 2));
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            label.setVerticalAlignment(SwingConstants.CENTER);
+            label.setFont(new Font("Arial", Font.PLAIN, 16));
+            label.setOpaque(true);
+            label.setBackground(new Color(187, 186, 186, 255));
+        }
+    }
+
+
+    class FiltrujKursy extends JPanel{
+        private JLabel nazwa;
+        private JLabel prowadzacy;
+        private JLabel pkt;
+        private JTextField nazwatxt;
+        private JTextField prowadzacytxt;
+        private JTextField pkttxt;
+        private JButton zatwierdz;
+        private JButton usunFiltry;
+        public FiltrujKursy(){
+            this.setLayout(new GridLayout(7,2,10,10));
+            nazwa=new JLabel("NAZWA:");
+            setupLabel(nazwa);
+            prowadzacy=new JLabel("NAZWISKO PROWADZĄCEGO:");
+            setupLabel(prowadzacy);
+            pkt = new JLabel("ILOŚĆ PUNKTÓW:");
+            setupLabel(pkt);
+            nazwatxt=new JTextField();
+            nazwatxt.setBorder(new LineBorder(Color.BLACK, 2));
+            prowadzacytxt=new JTextField();
+            prowadzacytxt.setBorder(new LineBorder(Color.BLACK, 2));
+            pkttxt=new JTextField();
+            pkttxt.setBorder(new LineBorder(Color.BLACK, 2));
+
+            usunFiltry = new JButton("USUN FILTRY");
+            usunFiltry.setBackground(Color.WHITE);
+            usunFiltry.setFont(new Font("Arial", Font.PLAIN, 16));
+            usunFiltry.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    nazwatxt.setText("");
+                    prowadzacytxt.setText("");
+                    pkttxt.setText("");
+                }
+            });
+
+            zatwierdz = new JButton("FILTRUJ");
+            zatwierdz.setBackground(Color.WHITE);
+            zatwierdz.setFont(new Font("Arial", Font.PLAIN, 16));
+            zatwierdz.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(Objects.equals(nazwatxt.getText(), "") && Objects.equals(prowadzacytxt.getText(), "") && Objects.equals(pkttxt.getText(), "")){
+                        kursy = (ArrayList) Main.listaKursow;
+                        Object[][] noweDane = new Object[kursy.size()][1];
+
+                        for(int i=0; i<kursy.size(); i++){
+                            noweDane[i][0] = new WizytowkaKurs((Kursy) kursy.get(i));
+                        }
+                        aktualizujTabele(noweDane);
+                    }else{
+                        kursy = new ArrayList();
+                        kursy.addAll(Menu.wyszukajPoNazwaKursu(nazwatxt.getText()));
+                        kursy.addAll(Menu.wyszukajPoNazwiskuProwadzacego(prowadzacytxt.getText()));
+                        if(pkttxt.getText().matches("[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?")) {
+                            kursy.addAll(Menu.wyszukajPoPktECTS(Float.parseFloat(pkttxt.getText())));
+                        }
+
+                        Object[][] noweDane = new Object[kursy.size()][1];
+
+                        for(int i=0; i<kursy.size(); i++){
+                            noweDane[i][0]= new WizytowkaKurs((Kursy) kursy.get(i));
+                        }
+                        aktualizujTabele(noweDane);
+                    }
+                }
+            });
+
+            this.add(nazwa);
+            this.add(nazwatxt);
+            this.add(prowadzacy);
+            this.add(prowadzacytxt);
+            this.add(pkt);
+            this.add(pkttxt);
             this.add(zatwierdz);
             this.add(usunFiltry);
             this.setBackground(new Color(126, 126, 126, 255));

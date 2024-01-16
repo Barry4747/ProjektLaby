@@ -145,6 +145,13 @@ public class GUI {
         usuwaniePanel.setBackground(Color.GRAY);
         panelCentrumGlowny.add(usuwaniePanel);
 
+        //panel dodawania
+        PanelDodawania panelDodawania = new PanelDodawania();
+        panelDodawania.setBounds(400,100,900,800);
+        panelDodawania.setBackground(Color.GRAY);
+        panelDodawania.setVisible(false);
+        panelCentrumGlowny.add(panelDodawania);
+
 
         //action listenery
         buttonWyswietl.addActionListener(new ActionListener() {
@@ -153,6 +160,7 @@ public class GUI {
                 wyswietlanieGUI.setVisible(true);
                 filtrowaniePanel.setVisible(true);
                 usuwaniePanel.setVisible(false);
+                panelDodawania.setVisible(false);
             }
         });
 
@@ -162,6 +170,7 @@ public class GUI {
                 wyswietlanieGUI.setVisible(false);
                 filtrowaniePanel.setVisible(false);
                 usuwaniePanel.setVisible(false);
+                panelDodawania.setVisible(true);
             }
         });
 
@@ -171,6 +180,7 @@ public class GUI {
                 wyswietlanieGUI.setVisible(true);
                 filtrowaniePanel.setVisible(false);
                 usuwaniePanel.setVisible(true);
+                panelDodawania.setVisible(false);
             }
         });
 

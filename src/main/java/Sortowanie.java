@@ -26,18 +26,18 @@ public class Sortowanie {
             System.out.println(i.getNazwisko()+" "+i.getImie()+" "+i.getWiek());
         }return osoby;
     }
-    public static void kursPoECTS(List<Kursy> listaKursow){
+    public static List kursPoECTS(List<Kursy> listaKursow){
         Comparator<Kursy> comparator = Comparator.comparingDouble(Kursy::getPktECTS);
         Collections.sort(listaKursow, comparator);
         for (Kursy i : listaKursow){
             System.out.println(i.getNazwaKursu() + " " + i.getPktECTS());
-        }
+        }return listaKursow;
     }
-    public static void kursPoNazwisko(List<Kursy> listaKursow){
+    public static List kursPoNazwisko(List<Kursy> listaKursow){
         Comparator<Kursy> comparator = Comparator.comparing(k -> k.getProwadzacy().getNazwisko());
         Collections.sort(listaKursow, comparator);
         for(Kursy i : listaKursow){
             System.out.println(i.getNazwaKursu() + " " + i.getProwadzacy().getNazwisko());
-        }
+        }return listaKursow;
     }
 }

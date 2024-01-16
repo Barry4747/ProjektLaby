@@ -224,31 +224,31 @@ public class Menu {
         }
     }
     public static void opcjaDodaj(String wybor, Scanner scan){
-        LoopAdding:
-        while (true){
-            menuDodaj();
-            wybor=scan.nextLine();
-            switch (wybor){
-                case "1":
-                    DodawanieOsobIKursow.dodajStudent(scan);
-                    break;
-                case "2":
-                    DodawanieOsobIKursow.dodajKurs(scan);
-                    break;
-                case "3":
-                    DodawanieOsobIKursow.dodajPracownikBadawczoDydaktyczny(scan);
-                    break;
-                case "4":
-                    DodawanieOsobIKursow.dodajPracownikAdministracyjny(scan);
-                    break;
-                case "5":
-                    break LoopAdding;
-                default:
-                    System.out.println("Nieprawidlowa opcja");
-                    break;
-            }
-
-        }
+//        LoopAdding:
+//        while (true){
+//            menuDodaj();
+//            wybor=scan.nextLine();
+//            switch (wybor){
+//                case "1":
+//                    DodawanieOsobIKursow.dodajStudent(scan);
+//                    break;
+//                case "2":
+//                    DodawanieOsobIKursow.dodajKurs(scan);
+//                    break;
+//                case "3":
+//                    DodawanieOsobIKursow.dodajPracownikBadawczoDydaktyczny(scan);
+//                    break;
+//                case "4":
+//                    DodawanieOsobIKursow.dodajPracownikAdministracyjny(scan);
+//                    break;
+//                case "5":
+//                    break LoopAdding;
+//                default:
+//                    System.out.println("Nieprawidlowa opcja");
+//                    break;
+//            }
+//
+//        }
     }
 
     public static void sortowanie(String wybor, Scanner scan){
@@ -519,13 +519,13 @@ public class Menu {
             return new ArrayList();
         }return lista;
     }
-    public static void wyswietlWszystkieKursy(){
+    public static List wyswietlWszystkieKursy(){
         if(Main.listaKursow.isEmpty()){
             System.out.println("Lista kursow jest pusta!");
         }
         for(int i=0; i<Main.listaKursow.size(); i++){
             Main.listaKursow.get(i).wyswietlInfo();
-        }
+        }return Main.listaKursow;
     }
     public static List wyswietlPracownikUczelni(){
         czyZnaleziono=false;

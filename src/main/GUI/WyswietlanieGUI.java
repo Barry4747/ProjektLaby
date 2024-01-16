@@ -30,7 +30,7 @@ public class WyswietlanieGUI extends JPanel {
         }
 
         Object[][] dane = new Object[wizytowki.size()][1];
-        String[] naglowek = {"Osoby"};
+        String[] naglowek = {"UCZELNIA"};
 
         for(int i=0; i<wizytowki.size(); i++){
             dane[i][0] = wizytowki.get(i);
