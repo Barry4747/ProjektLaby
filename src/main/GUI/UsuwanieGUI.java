@@ -13,33 +13,23 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class FiltrowanieWyswietlaniaGUI extends JPanel {
+public class UsuwanieGUI extends JPanel {
+    private DefaultTableModel model;
+    private JTable tabela;
     private ArrayList osoby;
 
     private JButton wszyscyButton;
     private JButton studenciButton;
     private JButton pracownicyButton;
     private JButton kursyButton;
-    private DefaultTableModel model;
-    private JTable tabela;
 
-    public FiltrowanieWyswietlaniaGUI(DefaultTableModel model, JTable tabela){
+    public UsuwanieGUI(DefaultTableModel model, JTable tabela){
         this.tabela=tabela;
         this.model=model;
         this.setLayout(null);
 
         osoby = (ArrayList) Main.osoba;
 
-        FiltrujStudentow filtrujStudentow = new FiltrujStudentow();
-        filtrujStudentow.setBounds(100,100,400,400);
-        filtrujStudentow.setVisible(false);
-
-        FiltrujPracownikow filtrujPracownikow = new FiltrujPracownikow();
-        filtrujPracownikow.setBounds(100,100,400,400);
-        filtrujPracownikow.setVisible(false);
-
-        this.add(filtrujStudentow);
-        this.add(filtrujPracownikow);
 
         wszyscyButton = new JButton("WSZYSCY");
         studenciButton = new JButton("STUDENCI");
@@ -51,12 +41,21 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
         buttonSetup(pracownicyButton, 300,0);
         buttonSetup(kursyButton, 450, 0);
 
+        UsunStudentow usunStudentow = new UsunStudentow();
+        usunStudentow.setBounds(100,100,400,400);
+        usunStudentow.setVisible(false);
+        add(usunStudentow);
+
+        UsunPracownikow usunPracownikow = new UsunPracownikow();
+        usunPracownikow.setBounds(100,100,400,400);
+        usunPracownikow.setVisible(false);
+        add(usunPracownikow);
+
         wszyscyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                filtrujPracownikow.setVisible(false);
-                filtrujStudentow.setVisible(false);
-
+                usunStudentow.setVisible(false);
+                usunPracownikow.setVisible(false);
                 osoby= (ArrayList) Main.osoba;
                 Object[][] noweDane = new Object[Main.osoba.size()][1];
 
@@ -65,7 +64,7 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
                         noweDane[i][0]=new WizytowkaStudent((Student) Main.osoba.get(i));
                     } else if(Main.osoba.get(i) instanceof PracownikBadawczoDydaktyczny){
                         noweDane[i][0]=new WizytowkaPracownikBadawczoDydaktyczny((PracownikBadawczoDydaktyczny) Main.osoba.get(i));
-                    } else if (Main.osoba.get(i) instanceof  PracownikAdministracyjny) {
+                    } else if (Main.osoba.get(i) instanceof PracownikAdministracyjny) {
                         noweDane[i][0]=new WizytowkaPracownikAdministracyjny(((PracownikAdministracyjny) Main.osoba.get(i)));
                     }
                 }
@@ -75,10 +74,9 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
         studenciButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                filtrujPracownikow.setVisible(false);
-                filtrujStudentow.setVisible(true);
-
-                osoby = (ArrayList) Menu.wyswietlStudentow();
+                usunStudentow.setVisible(true);
+                usunPracownikow.setVisible(false);
+                osoby = (ArrayList) main.java.Menu.wyswietlStudentow();
 
                 Object[][] noweDane = new Object[osoby.size()][1];
 
@@ -91,8 +89,8 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
         pracownicyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                filtrujPracownikow.setVisible(true);
-                filtrujStudentow.setVisible(false);
+                usunStudentow.setVisible(false);
+                usunPracownikow.setVisible(true);
                 osoby = (ArrayList) Menu.wyswietlPracownikUczelni();
 
                 Object[][] noweDane = new Object[osoby.size()][1];
@@ -109,83 +107,7 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
 
         });
 
-
-
-        //sortowanie
-        JPanel panelSortowanie = new JPanel();
-        panelSortowanie.setLayout(new BoxLayout(panelSortowanie, BoxLayout.X_AXIS));
-        JLabel ikonaSortowania = new JLabel();
-        ikonaSortowania.setSize(50,50);
-        ikonaSortowania.setOpaque(true);
-        ikonaSortowania.setBackground(Color.WHITE);
-        ikonaSortowania.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\barte\\Documents\\GitHub\\ProjektLaby\\src\\resources\\sort.png").getImage().getScaledInstance(ikonaSortowania.getWidth(), ikonaSortowania.getHeight(), Image.SCALE_SMOOTH)));
-
-        String[] options = {
-                "nazwisko",
-                "nazwisko i imie",
-                "nazwisko i wiek"
-        };
-
-        JComboBox<String> comboBox = new JComboBox<>(options);
-        comboBox.setSize(100,50);
-
-        comboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Object[][] noweDane = new Object[osoby.size()][1];
-                String selectedOption = (String) comboBox.getSelectedItem();
-                switch (selectedOption) {
-                    case "nazwisko":
-                        osoby= (ArrayList) Sortowanie.poNazwisku(osoby);
-                        for(int i = 0; i< osoby.size(); i++){
-                            if(osoby.get(i) instanceof Student){
-                                noweDane[i][0]=new WizytowkaStudent((Student) osoby.get(i));
-                            } else if(osoby.get(i) instanceof PracownikBadawczoDydaktyczny){
-                                noweDane[i][0]=new WizytowkaPracownikBadawczoDydaktyczny((PracownikBadawczoDydaktyczny) osoby.get(i));
-                            } else if (osoby.get(i) instanceof  PracownikAdministracyjny) {
-                                noweDane[i][0]=new WizytowkaPracownikAdministracyjny(((PracownikAdministracyjny) osoby.get(i)));
-                            }
-                        }
-                        aktualizujTabele(noweDane);
-                        break;
-                    case "nazwisko i imie":
-                        osoby= (ArrayList) Sortowanie.poImieniuINazwisku(osoby);
-                        for(int i = 0; i< osoby.size(); i++){
-                            if(osoby.get(i) instanceof Student){
-                                noweDane[i][0]=new WizytowkaStudent((Student) osoby.get(i));
-                            } else if(osoby.get(i) instanceof PracownikBadawczoDydaktyczny){
-                                noweDane[i][0]=new WizytowkaPracownikBadawczoDydaktyczny((PracownikBadawczoDydaktyczny) osoby.get(i));
-                            } else if (osoby.get(i) instanceof  PracownikAdministracyjny) {
-                                noweDane[i][0]=new WizytowkaPracownikAdministracyjny(((PracownikAdministracyjny) osoby.get(i)));
-                            }
-                        }
-                        aktualizujTabele(noweDane);
-                        break;
-                    case "nazwisko i wiek":
-                        osoby= (ArrayList) Sortowanie.poNazwiskuIWieku(osoby);
-                        for(int i = 0; i< osoby.size(); i++){
-                            if(osoby.get(i) instanceof Student){
-                                noweDane[i][0]=new WizytowkaStudent((Student) osoby.get(i));
-                            } else if(osoby.get(i) instanceof PracownikBadawczoDydaktyczny){
-                                noweDane[i][0]=new WizytowkaPracownikBadawczoDydaktyczny((PracownikBadawczoDydaktyczny) osoby.get(i));
-                            } else if (osoby.get(i) instanceof  PracownikAdministracyjny) {
-                                noweDane[i][0]=new WizytowkaPracownikAdministracyjny(((PracownikAdministracyjny) osoby.get(i)));
-                            }
-                        }
-                        aktualizujTabele(noweDane);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        ikonaSortowania.setBounds(0,550,50,50);
-        comboBox.setBounds(50,550,200,50);
-        this.add(comboBox);
-        this.add(ikonaSortowania);
-
     }
-
 
     public void buttonSetup(JButton button, int x, int y){
         button.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -199,7 +121,6 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
         model.setDataVector(noweDane, naglowek);
         tabela.getColumnModel().getColumn(0).setCellRenderer(new PanelRenderer());
     }
-
     private class PanelRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -208,20 +129,18 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
         }
     }
 
-    class FiltrujStudentow extends JPanel{
+    class UsunStudentow extends JPanel{
         private JLabel labelNazwisko;
         private JLabel labelImie;
         private JLabel labelId;
         private JLabel labelRok;
-        private JLabel labelKurs;
         private JTextField txtNazwisko;
         private JTextField txtImie;
         private JTextField txtId;
         private JTextField txtRok;
-        private JTextField txtKurs;
         private JButton zatwierdz;
         private JButton usunFiltry;
-        public FiltrujStudentow(){
+        public UsunStudentow(){
             this.setLayout(new GridLayout(6,2,10,10));
             labelImie=new JLabel("IMIE:");
             setupLabel(labelImie);
@@ -231,8 +150,6 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             setupLabel(labelId);
             labelRok = new JLabel("ROK STUDIOW:");
             setupLabel(labelRok);
-            labelKurs = new JLabel("NAZWA KURSU:");
-            setupLabel(labelKurs);
             txtNazwisko=new JTextField();
             txtNazwisko.setBorder(new LineBorder(Color.BLACK, 2));
             txtImie=new JTextField();
@@ -241,8 +158,6 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             txtId.setBorder(new LineBorder(Color.BLACK, 2));
             txtRok=new JTextField();
             txtRok.setBorder(new LineBorder(Color.BLACK, 2));
-            txtKurs=new JTextField();
-            txtKurs.setBorder(new LineBorder(Color.BLACK, 2));
 
             usunFiltry = new JButton("USUN FILTRY");
             usunFiltry.setBackground(Color.WHITE);
@@ -254,7 +169,6 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
                     txtNazwisko.setText("");
                     txtId.setText("");
                     txtRok.setText("");
-                    txtKurs.setText("");
                 }
             });
 
@@ -265,7 +179,7 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(Objects.equals(txtNazwisko.getText(), "") && Objects.equals(txtImie.getText(), "") && Objects.equals(txtId.getText(), "")
-                            && Objects.equals(txtRok.getText(), "") && Objects.equals(txtKurs.getText(), "")){
+                            && Objects.equals(txtRok.getText(), "")){
                         osoby= (ArrayList) Menu.wyswietlStudentow();
                         Object[][] noweDane = new Object[osoby.size()][1];
 
@@ -275,13 +189,12 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
                         aktualizujTabele(noweDane);
                     }else{
                         osoby = new ArrayList();
-                        osoby.addAll(Menu.wyszukajPoNazwiskoStudent(txtNazwisko.getText()));
-                        osoby.addAll(Menu.wyszukajPoImieStudent(txtImie.getText()));
-                        osoby.addAll(Menu.wyszukajPoNrIndeksu(txtId.getText()));
+                        osoby.addAll(Usuwanie.usunStudentaPoNazwisku(Main.osoba, txtNazwisko.getText()));
+                        osoby.addAll(Usuwanie.usunStudentaPoImieniu(Main.osoba, txtImie.getText()));
+                        osoby.addAll(Usuwanie.usunStudentaPoNrIndeksu(Main.osoba, txtId.getText()));
                         if(txtRok.getText().matches("[0-9]+")) {
-                            osoby.addAll(Menu.wyszukajPoRokStudiow(Integer.parseInt(txtRok.getText())));
+                            osoby.addAll(Usuwanie.usunStudentaPoRokuStudiow(Main.osoba, txtRok.getText()));
                         }
-                        osoby.addAll(Menu.wyszukajPoNazwaKursuStudent(txtKurs.getText()));
 
                         Object[][] noweDane = new Object[osoby.size()][1];
 
@@ -301,8 +214,6 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             this.add(txtId);
             this.add(labelRok);
             this.add(txtRok);
-            this.add(labelKurs);
-            this.add(txtKurs);
             this.add(zatwierdz);
             this.add(usunFiltry);
             this.setBackground(new Color(126, 126, 126, 255));
@@ -316,23 +227,18 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             label.setBackground(new Color(187, 186, 186, 255));
         }
     }
-
-    class FiltrujPracownikow extends JPanel{
+    class UsunPracownikow extends JPanel{
         private JLabel labelNazwisko;
         private JLabel labelImie;
         private JLabel labelStanowisko;
         private JLabel labelStaz;
-        private JLabel labelNadgodziny;
-        private JLabel labelPensja;
         private JTextField txtNazwisko;
         private JTextField txtImie;
         private JTextField txtStanowisko;
         private JTextField txtStaz;
-        private JTextField txtNadgodziny;
-        private JTextField txtPensja;
         private JButton zatwierdz;
         private JButton usunFiltry;
-        public FiltrujPracownikow(){
+        public UsunPracownikow(){
             this.setLayout(new GridLayout(7,2,10,10));
             labelImie=new JLabel("IMIE:");
             setupLabel(labelImie);
@@ -342,10 +248,6 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             setupLabel(labelStanowisko);
             labelStaz = new JLabel("STAZ PRACY:");
             setupLabel(labelStaz);
-            labelNadgodziny = new JLabel("LICZBA NADGODZIN:");
-            setupLabel(labelNadgodziny);
-            labelPensja = new JLabel("PENSJ: ");
-            setupLabel(labelPensja);
             txtNazwisko=new JTextField();
             txtNazwisko.setBorder(new LineBorder(Color.BLACK, 2));
             txtImie=new JTextField();
@@ -354,10 +256,6 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             txtStanowisko.setBorder(new LineBorder(Color.BLACK, 2));
             txtStaz=new JTextField();
             txtStaz.setBorder(new LineBorder(Color.BLACK, 2));
-            txtNadgodziny=new JTextField();
-            txtNadgodziny.setBorder(new LineBorder(Color.BLACK, 2));
-            txtPensja=new JTextField();
-            txtPensja.setBorder(new LineBorder(Color.BLACK, 2));
 
             usunFiltry = new JButton("USUN FILTRY");
             usunFiltry.setBackground(Color.WHITE);
@@ -369,8 +267,6 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
                     txtNazwisko.setText("");
                     txtStanowisko.setText("");
                     txtStaz.setText("");
-                    txtNadgodziny.setText("");
-                    txtPensja.setText("");
                 }
             });
 
@@ -381,7 +277,7 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(Objects.equals(txtNazwisko.getText(), "") && Objects.equals(txtImie.getText(), "") && Objects.equals(txtStanowisko.getText(), "")
-                            && Objects.equals(txtStaz.getText(), "") && Objects.equals(txtNadgodziny.getText(), "")&& Objects.equals(txtPensja.getText(), "")){
+                            && Objects.equals(txtStaz.getText(), "")){
                         osoby= (ArrayList) Menu.wyswietlPracownikUczelni();
                         Object[][] noweDane = new Object[osoby.size()][1];
 
@@ -395,17 +291,11 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
                         aktualizujTabele(noweDane);
                     }else{
                         osoby = new ArrayList();
-                        osoby.addAll(Menu.wyszukajPoNazwiskoPracownik(txtNazwisko.getText()));
-                        osoby.addAll(Menu.wyszukajPoImiePracownik(txtImie.getText()));
-                        osoby.addAll(Menu.wyszukajPoStanowisko(txtStanowisko.getText()));
+                        osoby.addAll(Usuwanie.usunPracownikPoNazwisku(Main.osoba, txtNazwisko.getText()));
+                        osoby.addAll(Usuwanie.usunPracownikPoImieniu(Main.osoba, txtImie.getText()));
+                        osoby.addAll(Usuwanie.usunPracownikPoStanowisku(Main.osoba, txtStanowisko.getText()));
                         if(txtStaz.getText().matches("[0-9]+")) {
-                            osoby.addAll(Menu.wyszukajPoStazPracy((byte) Integer.parseInt(txtStaz.getText())));
-                        }
-                        if(txtNadgodziny.getText().matches("[0-9]+")) {
-                            osoby.addAll(Menu.wyszukajPoLiczbaNadgodzin(Integer.parseInt(txtNadgodziny.getText())));
-                        }
-                        if(txtPensja.getText().matches("[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?")) {
-                            osoby.addAll(Menu.wyszukajPoPensja(Float.parseFloat(txtPensja.getText())));
+                            osoby.addAll(Usuwanie.usunPracownikPoStazuPracy(Main.osoba, txtStaz.getText()));
                         }
 
                         Object[][] noweDane = new Object[osoby.size()][1];
@@ -430,10 +320,6 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             this.add(txtStanowisko);
             this.add(labelStaz);
             this.add(txtStaz);
-            this.add(labelNadgodziny);
-            this.add(txtNadgodziny);
-            this.add(labelPensja);
-            this.add(txtPensja);
             this.add(zatwierdz);
             this.add(usunFiltry);
             this.setBackground(new Color(126, 126, 126, 255));
@@ -448,4 +334,3 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
         }
     }
 }
-

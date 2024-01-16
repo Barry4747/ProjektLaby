@@ -139,6 +139,12 @@ public class GUI {
         filtrowaniePanel.setBackground(Color.GRAY);
         panelCentrumGlowny.add(filtrowaniePanel);
 
+        //panel do usuwania
+        UsuwanieGUI usuwaniePanel = new UsuwanieGUI(wyswietlanieGUI.model, wyswietlanieGUI.tabela);
+        usuwaniePanel.setBounds(100,200,600,600);
+        usuwaniePanel.setBackground(Color.GRAY);
+        panelCentrumGlowny.add(usuwaniePanel);
+
 
         //action listenery
         buttonWyswietl.addActionListener(new ActionListener() {
@@ -146,6 +152,7 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 wyswietlanieGUI.setVisible(true);
                 filtrowaniePanel.setVisible(true);
+                usuwaniePanel.setVisible(false);
             }
         });
 
@@ -154,6 +161,16 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 wyswietlanieGUI.setVisible(false);
                 filtrowaniePanel.setVisible(false);
+                usuwaniePanel.setVisible(false);
+            }
+        });
+
+        buttonUsun.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                wyswietlanieGUI.setVisible(true);
+                filtrowaniePanel.setVisible(false);
+                usuwaniePanel.setVisible(true);
             }
         });
 

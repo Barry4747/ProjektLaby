@@ -311,16 +311,16 @@ public class Menu {
             wybor=scan.nextLine();
             switch (wybor){
                 case "1":
-                    Usuwanie.usunPracownikPoNazwisku(Main.osoba);
+                    Usuwanie.usunPracownikPoNazwisku(Main.osoba, "");
                     break;
                 case "2":
-                    Usuwanie.usunPracownikPoImieniu(Main.osoba);
+                    Usuwanie.usunPracownikPoImieniu(Main.osoba, "");
                     break;
                 case "3":
-                    Usuwanie.usunPracownikPoStazuPracy(Main.osoba);
+                    Usuwanie.usunPracownikPoStazuPracy(Main.osoba, "");
                     break;
                 case "4":
-                    Usuwanie.usunPracownikPoStanowisku(Main.osoba);
+                    Usuwanie.usunPracownikPoStanowisku(Main.osoba, "");
                     break;
                 case "5":
                     break LoopUsuwanie;
@@ -337,16 +337,16 @@ public class Menu {
             wybor=scan.nextLine();
             switch (wybor){
                 case "1":
-                    Usuwanie.usunStudentaPoNazwisku(Main.osoba);
+                    Usuwanie.usunStudentaPoNazwisku(Main.osoba, "");
                     break;
                 case "2":
-                    Usuwanie.usunStudentaPoImieniu(Main.osoba);
+                    Usuwanie.usunStudentaPoImieniu(Main.osoba, "");
                     break;
                 case "3":
-                    Usuwanie.usunStudentaPoNrIndeksu(Main.osoba);
+                    Usuwanie.usunStudentaPoNrIndeksu(Main.osoba, "");
                     break;
                 case "4":
-                    Usuwanie.usunStudentaPoRokuStudiow(Main.osoba);
+                    Usuwanie.usunStudentaPoRokuStudiow(Main.osoba, "");
                     break;
                 case "5":
                     break LoopUsuwanie;
