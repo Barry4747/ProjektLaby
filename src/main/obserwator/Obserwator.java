@@ -31,7 +31,7 @@ public class Obserwator implements Serializable {
     }
 
     public void powiadom(String temp){
-        this.powiadomienia.add("Do: "+this.mail+" | "+ temp);
+        this.powiadomienia.add(temp);
         System.out.println("Do: "+this.mail+" | "+ temp);
     }
 }

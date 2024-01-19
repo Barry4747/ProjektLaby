@@ -363,13 +363,13 @@ public class Menu {
             wybor=scan.nextLine();
             switch (wybor){
                 case "1":
-                    Usuwanie.usunKursPoNazwie(Main.listaKursow);
+                    Usuwanie.usunKursPoNazwie(Main.listaKursow, "");
                     break;
                 case "2":
-                    Usuwanie.usunKursPoNazwiskuProwadzacego(Main.listaKursow);
+                    Usuwanie.usunKursPoNazwiskuProwadzacego(Main.listaKursow, "");
                     break;
                 case "3":
-                    Usuwanie.usunKursPoLiczbiePktECTS(Main.listaKursow);
+                    Usuwanie.usunKursPoLiczbiePktECTS(Main.listaKursow, "");
                     break;
                 case "4":
                     break LoopUsuwanie;

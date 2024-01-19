@@ -10,12 +10,10 @@ public class Usuwanie {
     public static List usunPracownikPoNazwisku(List<Osoba> list, String nazwisko){
         for(int i=0; i<list.size(); i++){
             if(list.get(i) instanceof PracownikUczelni && list.get(i).getNazwisko().equals(nazwisko)){
-                int tempInt=Main.listaKursow.size();
-                int counter=0;
-                for(int j=0; j<tempInt; j++){
-                    if(Main.listaKursow.get(j).getProwadzacy().getNazwisko().equals(list.get(i))){
-                        Main.listaKursow.remove(j-counter);
-                        counter++;
+                for(int j=0; j<Main.listaKursow.size(); j++){
+                    if(Main.listaKursow.get(j).getProwadzacy().getNazwisko().equals(list.get(i).getNazwisko())){
+                        Main.listaKursow.remove(j);
+                        j--;
                     }
                 }
                 list.remove(i);
@@ -28,12 +26,10 @@ public class Usuwanie {
     public static List usunPracownikPoImieniu(List<Osoba> list, String imie){
         for(int i=0; i<list.size(); i++){
             if(list.get(i) instanceof PracownikUczelni && list.get(i).getImie().equals(imie)){
-                int tempInt=Main.listaKursow.size();
-                int counter=0;
-                for(int j=0; j<tempInt; j++){
-                    if(Main.listaKursow.get(j).getProwadzacy().getNazwisko().equals(list.get(i))){
-                        Main.listaKursow.remove(j-counter);
-                        counter++;
+                for(int j=0; j<Main.listaKursow.size(); j++){
+                    if(Main.listaKursow.get(j).getProwadzacy().getImie().equals(list.get(i).getImie())){
+                        Main.listaKursow.remove(j);
+                        j--;
                     }
                 }
                 list.remove(i);
@@ -47,12 +43,10 @@ public class Usuwanie {
         if(staz.matches("[0-9]+")) {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i) instanceof PracownikUczelni && ((PracownikUczelni) list.get(i)).getStazPracy() == Integer.parseInt(staz)) {
-                    int tempInt=Main.listaKursow.size();
-                    int counter=0;
-                    for(int j=0; j<tempInt; j++){
-                        if(Main.listaKursow.get(j).getProwadzacy().getNazwisko().equals(list.get(i))){
-                            Main.listaKursow.remove(j-counter);
-                            counter++;
+                    for(int j=0; j<Main.listaKursow.size(); j++){
+                        if(Main.listaKursow.get(j).getProwadzacy().getStazPracy()==((PracownikUczelni) list.get(i)).getStazPracy()){
+                            Main.listaKursow.remove(j);
+                            j--;
                         }
                     }
                     list.remove(i);
@@ -66,12 +60,10 @@ public class Usuwanie {
     public static List usunPracownikPoStanowisku(List<Osoba> list, String stanowisko){
         for(int i=0; i<list.size(); i++){
             if(list.get(i) instanceof PracownikUczelni && ((PracownikUczelni) list.get(i)).getStanowisko().equals(stanowisko)){
-                int tempInt=Main.listaKursow.size();
-                int counter=0;
-                for(int j=0; j<tempInt; j++){
-                    if(Main.listaKursow.get(j).getProwadzacy().getStanowisko().equals(list.get(i))){
-                        Main.listaKursow.remove(j-counter);
-                        counter++;
+                for(int j=0; j<Main.listaKursow.size(); j++){
+                    if(Main.listaKursow.get(j).getProwadzacy().getStanowisko().equals(((PracownikUczelni) list.get(i)).getStanowisko())){
+                        Main.listaKursow.remove(j);
+                        j--;
                     }
                 }
                 list.remove(i);
@@ -127,44 +119,35 @@ public class Usuwanie {
 
     //main.java.Kursy
 
-    public static void usunKursPoNazwie(List<Kursy> list){
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Podaj nazwe kursu ktory chcesz usunac: ");
-        String wybor = scan.nextLine();
+    public static List usunKursPoNazwie(List<Kursy> list, String nazwa){
         for(int i=0; i<list.size(); i++){
-            if(list.get(i) != null && list.get(i).getNazwaKursu().equals(wybor)){
+            if(list.get(i) != null && list.get(i).getNazwaKursu().equals(nazwa)){
                 list.remove(i);
                 System.out.println("Kurs usuniety");
                 i--;
             }
-        }
+        }return list;
     }
 
-    public static void usunKursPoNazwiskuProwadzacego(List<Kursy> list){
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Podaj nazwisko prowadzacego kursu ktory chcesz usunac: ");
-        String wybor = scan.nextLine();
+    public static List usunKursPoNazwiskuProwadzacego(List<Kursy> list, String nazwisko){
         for(int i=0; i<list.size(); i++){
-            if(list.get(i) != null && list.get(i).getProwadzacy().getNazwisko().equals(wybor)){
+            if(list.get(i) != null && list.get(i).getProwadzacy().getNazwisko().equals(nazwisko)){
                 list.remove(i);
                 System.out.println("Kurs usuniety");
                 i--;
             }
-        }
+        }return list;
     }
 
-    public static void usunKursPoLiczbiePktECTS(List<Kursy> list){
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Podaj liczbe punktow ECTS kursu ktory chcesz usunac: ");
-        String wybor = scan.nextLine();
-        if(wybor.matches("[0-9]+")) {
+    public static List usunKursPoLiczbiePktECTS(List<Kursy> list, String punkty){
+        if(punkty.matches("[+-]?([0-9]*[.])?[0-9]+")) {
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i) != null && list.get(i).getPktECTS() == Integer.parseInt(wybor)) {
+                if (list.get(i) != null && list.get(i).getPktECTS() == Integer.parseInt(punkty)) {
                     list.remove(i);
                     System.out.println("Kurs usuniety");
                     i--;
                 }
             }
-        }else System.out.println("Musi byc liczba");
+        }else System.out.println("Musi byc liczba"); return list;
     }
 }

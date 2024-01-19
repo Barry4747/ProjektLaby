@@ -51,11 +51,17 @@ public class UsuwanieGUI extends JPanel {
         usunPracownikow.setVisible(false);
         add(usunPracownikow);
 
+        UsunKurs usunKurs = new UsunKurs();
+        usunKurs.setBounds(100,100,400,400);
+        usunKurs.setVisible(false);
+        add(usunKurs);
+
         wszyscyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 usunStudentow.setVisible(false);
                 usunPracownikow.setVisible(false);
+                usunKurs.setVisible(false);
                 osoby= (ArrayList) Main.osoba;
                 Object[][] noweDane = new Object[Main.osoba.size()][1];
 
@@ -76,6 +82,7 @@ public class UsuwanieGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 usunStudentow.setVisible(true);
                 usunPracownikow.setVisible(false);
+                usunKurs.setVisible(false);
                 osoby = (ArrayList) main.java.Menu.wyswietlStudentow();
 
                 Object[][] noweDane = new Object[osoby.size()][1];
@@ -91,6 +98,7 @@ public class UsuwanieGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 usunStudentow.setVisible(false);
                 usunPracownikow.setVisible(true);
+                usunKurs.setVisible(false);
                 osoby = (ArrayList) Menu.wyswietlPracownikUczelni();
 
                 Object[][] noweDane = new Object[osoby.size()][1];
@@ -101,6 +109,23 @@ public class UsuwanieGUI extends JPanel {
                     }else{
                         noweDane[i][0] = new WizytowkaPracownikBadawczoDydaktyczny((PracownikBadawczoDydaktyczny) osoby.get(i));
                     }
+                }
+                aktualizujTabele(noweDane);
+            }
+
+        });
+
+        kursyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                usunStudentow.setVisible(false);
+                usunPracownikow.setVisible(false);
+                usunKurs.setVisible(true);
+
+                Object[][] noweDane = new Object[Main.listaKursow.size()][1];
+
+                for(int i=0; i<Main.listaKursow.size(); i++){
+                    noweDane[i][0] = new WizytowkaKurs(Main.listaKursow.get(i));
                 }
                 aktualizujTabele(noweDane);
             }
@@ -189,12 +214,13 @@ public class UsuwanieGUI extends JPanel {
                         aktualizujTabele(noweDane);
                     }else{
                         osoby = new ArrayList();
-                        osoby.addAll(Usuwanie.usunStudentaPoNazwisku(Main.osoba, txtNazwisko.getText()));
-                        osoby.addAll(Usuwanie.usunStudentaPoImieniu(Main.osoba, txtImie.getText()));
-                        osoby.addAll(Usuwanie.usunStudentaPoNrIndeksu(Main.osoba, txtId.getText()));
+                        Usuwanie.usunStudentaPoNazwisku(Main.osoba, txtNazwisko.getText());
+                        Usuwanie.usunStudentaPoImieniu(Main.osoba, txtImie.getText());
+                        Usuwanie.usunStudentaPoNrIndeksu(Main.osoba, txtId.getText());
                         if(txtRok.getText().matches("[0-9]+")) {
-                            osoby.addAll(Usuwanie.usunStudentaPoRokuStudiow(Main.osoba, txtRok.getText()));
+                            Usuwanie.usunStudentaPoRokuStudiow(Main.osoba, txtRok.getText());
                         }
+                        osoby.addAll(Menu.wyswietlStudentow());
 
                         Object[][] noweDane = new Object[osoby.size()][1];
 
@@ -270,7 +296,7 @@ public class UsuwanieGUI extends JPanel {
                 }
             });
 
-            zatwierdz = new JButton("FILTRUJ");
+            zatwierdz = new JButton("USUŃ");
             zatwierdz.setBackground(Color.WHITE);
             zatwierdz.setFont(new Font("Arial", Font.PLAIN, 16));
             zatwierdz.addActionListener(new ActionListener() {
@@ -291,12 +317,13 @@ public class UsuwanieGUI extends JPanel {
                         aktualizujTabele(noweDane);
                     }else{
                         osoby = new ArrayList();
-                        osoby.addAll(Usuwanie.usunPracownikPoNazwisku(Main.osoba, txtNazwisko.getText()));
-                        osoby.addAll(Usuwanie.usunPracownikPoImieniu(Main.osoba, txtImie.getText()));
-                        osoby.addAll(Usuwanie.usunPracownikPoStanowisku(Main.osoba, txtStanowisko.getText()));
+                        Usuwanie.usunPracownikPoNazwisku(Main.osoba, txtNazwisko.getText());
+                        Usuwanie.usunPracownikPoImieniu(Main.osoba, txtImie.getText());
+                        Usuwanie.usunPracownikPoStanowisku(Main.osoba, txtStanowisko.getText());
                         if(txtStaz.getText().matches("[0-9]+")) {
-                            osoby.addAll(Usuwanie.usunPracownikPoStazuPracy(Main.osoba, txtStaz.getText()));
+                            Usuwanie.usunPracownikPoStazuPracy(Main.osoba, txtStaz.getText());
                         }
+                        osoby.addAll(Menu.wyswietlPracownikUczelni());
 
                         Object[][] noweDane = new Object[osoby.size()][1];
 
@@ -320,6 +347,92 @@ public class UsuwanieGUI extends JPanel {
             this.add(txtStanowisko);
             this.add(labelStaz);
             this.add(txtStaz);
+            this.add(zatwierdz);
+            this.add(usunFiltry);
+            this.setBackground(new Color(126, 126, 126, 255));
+        }
+        public void setupLabel(JLabel label){
+            label.setBorder(new LineBorder(Color.BLACK, 2));
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            label.setVerticalAlignment(SwingConstants.CENTER);
+            label.setFont(new Font("Arial", Font.PLAIN, 16));
+            label.setOpaque(true);
+            label.setBackground(new Color(187, 186, 186, 255));
+        }
+    }
+
+    class UsunKurs extends JPanel{
+        private JLabel labelNazwa;
+        private JLabel labelNazwisko;
+        private JLabel labelPkt;
+        private JTextField txtNazwa;
+        private JTextField txtNazwisko;
+        private JTextField txtPkt;
+        private JButton zatwierdz;
+        private JButton usunFiltry;
+        public UsunKurs(){
+            this.setLayout(new GridLayout(7,2,10,10));
+            labelNazwa=new JLabel("NAZWA KURSU:");
+            setupLabel(labelNazwa);
+            labelNazwisko=new JLabel("NAZWISKO PROWADZĄCEGO:");
+            setupLabel(labelNazwisko);
+            labelPkt = new JLabel("ILOSC PUNKTOW ECTS:");
+            setupLabel(labelPkt);
+            txtNazwisko=new JTextField();
+            txtNazwisko.setBorder(new LineBorder(Color.BLACK, 2));
+            txtNazwa=new JTextField();
+            txtNazwa.setBorder(new LineBorder(Color.BLACK, 2));
+            txtPkt=new JTextField();
+            txtPkt.setBorder(new LineBorder(Color.BLACK, 2));
+
+            usunFiltry = new JButton("USUN FILTRY");
+            usunFiltry.setBackground(Color.WHITE);
+            usunFiltry.setFont(new Font("Arial", Font.PLAIN, 16));
+            usunFiltry.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    txtNazwa.setText("");
+                    txtNazwisko.setText("");
+                    txtPkt.setText("");
+                }
+            });
+
+            zatwierdz = new JButton("USUŃ");
+            zatwierdz.setBackground(Color.WHITE);
+            zatwierdz.setFont(new Font("Arial", Font.PLAIN, 16));
+            zatwierdz.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(Objects.equals(txtNazwa.getText(), "") && Objects.equals(txtNazwisko.getText(), "") && Objects.equals(txtPkt.getText(), "")){
+                        Object[][] noweDane = new Object[Main.listaKursow.size()][1];
+
+                        for(int i=0; i<Main.listaKursow.size(); i++){
+                            noweDane[i][0] = new WizytowkaKurs(Main.listaKursow.get(i));
+                        }
+                        aktualizujTabele(noweDane);
+                    }else{
+                        ArrayList<Kursy> kursy = new ArrayList<>();
+                        Usuwanie.usunKursPoNazwie(Main.listaKursow, txtNazwa.getText());
+                        Usuwanie.usunKursPoNazwiskuProwadzacego(Main.listaKursow, txtNazwisko.getText());
+                        Usuwanie.usunKursPoLiczbiePktECTS(Main.listaKursow, txtPkt.getText());
+                        kursy.addAll(Menu.wyswietlWszystkieKursy());
+
+                        Object[][] noweDane = new Object[kursy.size()][1];
+
+                        for(int i=0; i<kursy.size(); i++){
+                            noweDane[i][0] = new WizytowkaKurs(kursy.get(i));
+                        }
+                        aktualizujTabele(noweDane);
+                    }
+                }
+            });
+
+            this.add(labelNazwa);
+            this.add(txtNazwa);
+            this.add(labelNazwisko);
+            this.add(txtNazwisko);
+            this.add(labelPkt);
+            this.add(txtPkt);
             this.add(zatwierdz);
             this.add(usunFiltry);
             this.setBackground(new Color(126, 126, 126, 255));

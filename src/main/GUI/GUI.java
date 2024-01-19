@@ -23,6 +23,7 @@ public class GUI {
     public JButton buttonSortuj;
     public JButton buttonUsun;
     public JButton buttonZapisz;
+    public JButton buttonPowiadomienia;
     public JButton buttonPremia;
     public JRadioButton radioPremiaOpcja1;
     public JRadioButton radioPremiaOpcja2;
@@ -56,8 +57,10 @@ public class GUI {
         buttonDodaj = new JButton("DODAJ");
         buttonSortuj = new JButton("SORTUJ");
         buttonUsun = new JButton("USUN");
-        buttonZapisz = new JButton("ZAPISZ");
+        buttonZapisz = new JButton();
         buttonPremia = new JButton("LICZ PREMIE");
+        buttonPowiadomienia = new JButton();
+
 
         buttonWyjscia.setFont(new Font("Arial", Font.PLAIN, 18));
         buttonWyjscia.addActionListener(new ActionListener() {
@@ -87,7 +90,7 @@ public class GUI {
 
 
         buttonZapisz.setBounds(150,925, 40,50);
-        buttonZapisz.setBackground(new Color(178, 178, 178, 186));
+        buttonZapisz.setBackground(new Color(178, 178, 178, 255));
         buttonZapisz.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\barte\\Documents\\GitHub\\ProjektLaby\\src\\resources\\zapisz.png").getImage().getScaledInstance(buttonZapisz.getWidth(), buttonZapisz.getHeight(), Image.SCALE_SMOOTH)));
         buttonZapisz.addActionListener(new ActionListener() {
             @Override
@@ -98,6 +101,16 @@ public class GUI {
                     Serializacja.zapiszListeObs(i.getKursant().getListaObserwatorow(), i);
                 }
                 JOptionPane.showMessageDialog(null, "Zapisano zmiany!", "Informacja", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        buttonPowiadomienia.setBounds(100,925, 40,50);
+        buttonPowiadomienia.setBackground(new Color(178, 178, 178, 186));
+        buttonPowiadomienia.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\barte\\Documents\\GitHub\\ProjektLaby\\src\\resources\\powiadomienieIkona.png").getImage().getScaledInstance(buttonPowiadomienia.getWidth(), buttonPowiadomienia.getHeight(), Image.SCALE_SMOOTH)));
+        buttonPowiadomienia.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FramePowiadomienia framePowiadomienia = new FramePowiadomienia();
             }
         });
 
@@ -123,6 +136,7 @@ public class GUI {
         lebPanelLewy.setLayout(null);
         lebPanelLewy.add(panelMenu);
         lebPanelLewy.add(buttonZapisz);
+        lebPanelLewy.add(buttonPowiadomienia);
         panelLewyGlowny.add(lebPanelLewy);
         panelLewyGlowny.setSize(200,700);
 
