@@ -230,7 +230,7 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
         comboBoxKursy = new JComboBox<>(optionsKursy);
         comboBoxKursy.setSize(100,50);
 
-        comboBox.addActionListener(new ActionListener() {
+        comboBoxKursy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Object[][] noweDane = new Object[kursy.size()][1];

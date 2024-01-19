@@ -183,6 +183,7 @@ public class PanelDodawania extends JPanel {
             plecC.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    plec = "mężczyzna";
                     plec= (String) plecC.getSelectedItem();
                 }
             });
@@ -318,6 +319,7 @@ public class PanelDodawania extends JPanel {
             plecC.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    plec = "mężczyzna";
                     plec = (String) plecC.getSelectedItem();
                 }
             });
@@ -419,6 +421,7 @@ public class PanelDodawania extends JPanel {
             plecC.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    plec = "mężczyzna";
                     plec = (String) plecC.getSelectedItem();
                 }
             });
