@@ -33,6 +33,7 @@ public class GUI {
         ramka= new JFrame();
         ramka.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ramka.setTitle("Politechnika Wrocławska");
+        ramka.setResizable(false);
 
         panelGlowny = new JPanel();
         panelGlowny.setLayout(new BorderLayout());

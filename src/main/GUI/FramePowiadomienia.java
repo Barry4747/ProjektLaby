@@ -14,6 +14,7 @@ public class FramePowiadomienia extends JFrame {
     public FramePowiadomienia(){
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(1000,910);
+        setResizable(false);
 
         JPanel panelGlowny = new JPanel();
         panelGlowny.setLayout(new BorderLayout());
