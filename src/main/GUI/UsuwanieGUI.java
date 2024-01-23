@@ -197,7 +197,7 @@ public class UsuwanieGUI extends JPanel {
                 }
             });
 
-            zatwierdz = new JButton("FILTRUJ");
+            zatwierdz = new JButton("USUŃ");
             zatwierdz.setBackground(Color.WHITE);
             zatwierdz.setFont(new Font("Arial", Font.PLAIN, 16));
             zatwierdz.addActionListener(new ActionListener() {

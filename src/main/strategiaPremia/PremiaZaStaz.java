@@ -9,7 +9,8 @@ public class PremiaZaStaz implements StrategiaPremia{
             return 0;
         }else {
             int val = pracownik.getStazPracy()&0xFF;
-            return 10000 - 1000*(1/ (float)val);
+            pracownik.setPremia(((float)val)*30);
+            return ((float)val)*30;
         }
     }
 }

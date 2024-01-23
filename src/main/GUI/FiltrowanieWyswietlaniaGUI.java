@@ -2,6 +2,10 @@ package main.GUI;
 
 import main.java.*;
 import main.java.Menu;
+import main.strategiaPremia.PremiaZaNadgodziny;
+import main.strategiaPremia.PremiaZaPublikacje;
+import main.strategiaPremia.PremiaZaStaz;
+import main.strategiaPremia.StrategiaPremia;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -45,9 +49,15 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
         filtrujKursy.setBounds(100,100,400,400);
         filtrujKursy.setVisible(false);
 
+        JButton usunPowtorki = new JButton("USUŃ POWTÓRKI");
+        usunPowtorki.setBounds(345,525,250,70);
+        usunPowtorki.setBackground(Color.WHITE);
+        usunPowtorki.setVisible(true);
+
         this.add(filtrujStudentow);
         this.add(filtrujPracownikow);
         this.add(filtrujKursy);
+        this.add(usunPowtorki);
 
         wszyscyButton = new JButton("WSZYSCY");
         studenciButton = new JButton("STUDENCI");
@@ -67,6 +77,7 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
                 filtrujKursy.setVisible(false);
                 comboBoxKursy.setVisible(false);
                 comboBox.setVisible(true);
+                usunPowtorki.setVisible(true);
 
 
                 osoby= (ArrayList) Main.osoba;
@@ -92,6 +103,7 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
                 filtrujKursy.setVisible(false);
                 comboBoxKursy.setVisible(false);
                 comboBox.setVisible(true);
+                usunPowtorki.setVisible(false);
 
                 osoby = (ArrayList) Menu.wyswietlStudentow();
 
@@ -111,6 +123,7 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
                 filtrujKursy.setVisible(false);
                 comboBoxKursy.setVisible(false);
                 comboBox.setVisible(true);
+                usunPowtorki.setVisible(false);
                 osoby = (ArrayList) Menu.wyswietlPracownikUczelni();
 
                 Object[][] noweDane = new Object[osoby.size()][1];
@@ -135,6 +148,7 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
                 filtrujKursy.setVisible(true);
                 comboBoxKursy.setVisible(true);
                 comboBox.setVisible(false);
+                usunPowtorki.setVisible(false);
 
                 kursy = (ArrayList) Menu.wyswietlWszystkieKursy();
 
@@ -147,6 +161,12 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             }
         });
 
+        usunPowtorki.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Menu.usunPowtorki();
+            }
+        });
 
 
         //sortowanie
@@ -399,6 +419,8 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
         private JLabel labelStaz;
         private JLabel labelNadgodziny;
         private JLabel labelPensja;
+        private JLabel labelPremia;
+        private JComboBox<String> comboBoxPremia;
         private JTextField txtNazwisko;
         private JTextField txtImie;
         private JTextField txtStanowisko;
@@ -408,7 +430,7 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
         private JButton zatwierdz;
         private JButton usunFiltry;
         public FiltrujPracownikow(){
-            this.setLayout(new GridLayout(7,2,10,10));
+            this.setLayout(new GridLayout(8,2,10,10));
             labelImie=new JLabel("IMIE:");
             setupLabel(labelImie);
             labelNazwisko=new JLabel("NAZWISKO:");
@@ -421,6 +443,8 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             setupLabel(labelNadgodziny);
             labelPensja = new JLabel("PENSJ: ");
             setupLabel(labelPensja);
+            labelPremia = new JLabel("LICZ PREMIE PO: ");
+            setupLabel(labelPremia);
             txtNazwisko=new JTextField();
             txtNazwisko.setBorder(new LineBorder(Color.BLACK, 2));
             txtImie=new JTextField();
@@ -433,6 +457,60 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             txtNadgodziny.setBorder(new LineBorder(Color.BLACK, 2));
             txtPensja=new JTextField();
             txtPensja.setBorder(new LineBorder(Color.BLACK, 2));
+
+            //combobox do liczenia premi
+            String[] opcjePremia = {
+                    "staz pracy",
+                    "publikacje/nadgodziny"
+            };
+
+            comboBoxPremia = new JComboBox<>(opcjePremia);
+
+            comboBoxPremia.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ArrayList<PracownikUczelni> tempPracownicy = new ArrayList<>();
+                    StrategiaPremia strategiaPremia= new PremiaZaStaz();
+                    for(Osoba i : Main.osoba){
+                        if(i instanceof PracownikUczelni) {
+                            tempPracownicy.add((PracownikUczelni) i);
+                        }
+                    }
+                    Object[][] noweDane = new Object[tempPracownicy.size()][1];
+                    String selectedOption = (String) comboBoxPremia.getSelectedItem();
+                    switch (selectedOption) {
+                        case "staz pracy":
+                            strategiaPremia = new PremiaZaStaz();
+                            for(PracownikUczelni i : tempPracownicy){
+                                i.setPremia(strategiaPremia.liczPremie(i));
+                            }
+                            break;
+                        case "publikacje/nadgodziny":
+                            for(PracownikUczelni i : tempPracownicy){
+                                if(i instanceof PracownikAdministracyjny){
+                                    strategiaPremia=new PremiaZaNadgodziny();
+                                    i.setPremia(strategiaPremia.liczPremie(i));
+                                }else {
+                                    strategiaPremia = new PremiaZaPublikacje();
+                                    i.setPremia(strategiaPremia.liczPremie(i));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    for(int i=0; i<tempPracownicy.size(); i++){
+                        if(tempPracownicy.get(i) instanceof PracownikBadawczoDydaktyczny) {
+                            noweDane[i][0] = new WizytowkaPracownikBadawczoDydaktyczny((PracownikBadawczoDydaktyczny) tempPracownicy.get(i));
+                        }else{
+                            noweDane[i][0] = new WizytowkaPracownikAdministracyjny((PracownikAdministracyjny) tempPracownicy.get(i));
+                        }
+                    }
+
+                    aktualizujTabele(noweDane);
+                }
+            });
+
 
             usunFiltry = new JButton("USUN FILTRY");
             usunFiltry.setBackground(Color.WHITE);
@@ -509,6 +587,8 @@ public class FiltrowanieWyswietlaniaGUI extends JPanel {
             this.add(txtNadgodziny);
             this.add(labelPensja);
             this.add(txtPensja);
+            this.add(labelPremia);
+            this.add(comboBoxPremia);
             this.add(zatwierdz);
             this.add(usunFiltry);
             this.setBackground(new Color(126, 126, 126, 255));

@@ -198,15 +198,23 @@ public class PanelDodawania extends JPanel {
             kursyB.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    JFrame ramkaKursow = new JFrame("Wybor kursow");
+                    JFrame ramkaKursow = new JFrame();
+                    ramkaKursow.setResizable(false);
+                    ramkaKursow.setLocationRelativeTo(kursyB);
                     JCheckBox[] checkBoxes = new JCheckBox[Main.listaKursow.size()];
                     JPanel panelNaCheckBoxy = new JPanel();
+                    JLabel labelWybierz = new JLabel("Wybierz kursy:");
+                    labelWybierz.setMaximumSize(new Dimension(200,50));
+                    labelWybierz.setBorder(new LineBorder(Color.BLACK, 1));
+                    panelNaCheckBoxy.add(labelWybierz);
                     panelNaCheckBoxy.setLayout(new BoxLayout(panelNaCheckBoxy, BoxLayout.Y_AXIS));
                     for(int i=0 ; i<checkBoxes.length; i++){
                         panelNaCheckBoxy.add(checkBoxes[i]=new JCheckBox(Main.listaKursow.get(i).getNazwaKursu()));
+                        checkBoxes[i].setMaximumSize(new Dimension(200,50));
                     }
                     JScrollPane scrollPane = new JScrollPane(panelNaCheckBoxy);
-                    scrollPane.setBounds(600,600,200,300);
+                    scrollPane.setBounds(0,0,200,300);
+                    scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                     ramkaKursow.setSize(200,300);
                     ramkaKursow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     ramkaKursow.addWindowListener(new WindowAdapter() {
@@ -221,7 +229,24 @@ public class PanelDodawania extends JPanel {
                             ramkaKursow.dispose();
                         }
                     });
-                    ramkaKursow.add(panelNaCheckBoxy);
+                    JButton dodajKursy = new JButton("DODAJ KURSY");
+                    dodajKursy.setBackground(Color.WHITE);
+                    dodajKursy.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            listaKursowTemp.clear();
+                            for(int i=0; i<checkBoxes.length; i++){
+                                if(checkBoxes[i].isSelected()){
+                                    listaKursowTemp.add(Main.listaKursow.get(i));
+                                }
+                            }
+                            ramkaKursow.dispose();
+                        }
+                    });
+                    dodajKursy.setMaximumSize(new Dimension(200,50));
+                    panelNaCheckBoxy.add(dodajKursy);
+
+                    ramkaKursow.add(scrollPane);
                     ramkaKursow.setVisible(true);
                 }
             });
